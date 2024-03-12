@@ -17,7 +17,7 @@
       ></model-carousel2>
     </template>
     <!-- 热门广告 -->
-    <template v-if="element.type == 'hotAdvert'">
+    <!-- <template v-if="element.type == 'hotAdvert'">
       <div class="mb_20 width_1200_auto">
         <img
           style="display: block"
@@ -40,13 +40,13 @@
           </li>
         </template>
       </ul>
-    </template>
+    </template> -->
     <!-- 限时秒杀 待完善 -->
-    <template v-if="element.type == 'seckill' && element.options.list.length">
+    <!-- <template v-if="element.type == 'seckill' && element.options.list.length">
       <seckill :data="element" class="mb_20 width_1200_auto"></seckill>
-    </template>
+    </template> -->
     <!-- 折扣广告 -->
-    <template v-if="element.type == 'discountAdvert'">
+    <!-- <template v-if="element.type == 'discountAdvert'">
       <div
         class="discountAdvert"
         :style="{
@@ -75,7 +75,7 @@
           alt=""
         />
       </div>
-    </template>
+    </template> -->
 
     <!-- 好货推荐 -->
     <!-- <template v-if="element.type == 'recommend'">
