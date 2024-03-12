@@ -26,6 +26,6 @@ export default {
 <style lang="scss" scoped>
 .model-content {
   width: 100%;
-  min-height: 1200px;
+  // min-height: 1200px;
 }
 </style>

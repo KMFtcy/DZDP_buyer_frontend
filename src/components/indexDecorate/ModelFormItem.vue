@@ -78,46 +78,46 @@
     </template>
 
     <!-- 好货推荐 -->
-    <template v-if="element.type == 'recommend'">
+    <!-- <template v-if="element.type == 'recommend'">
       <recommend :data="element" class="mb_20 width_1200_auto"></recommend>
-    </template>
+    </template> -->
 
     <!-- 一行三列 -->
-    <template v-if="element.type == 'oneRowThreeColumns'">
+    <!-- <template v-if="element.type == 'oneRowThreeColumns'">
       <oneRowThreeColumns :data="element" class="mb_20 width_1200_auto"></oneRowThreeColumns>
-    </template>
+    </template> -->
     <!-- 商品模块 -->
-    <template v-if="element.type == 'goodsType'">
+    <!-- <template v-if="element.type == 'goodsType'">
       <goodsAndType :paramData="element" class="mb_20 width_1200_auto"></goodsAndType>
-    </template>
+    </template> -->
     <!-- 商品模块 -->
-    <template v-if="element.type == 'onlyGoodsModel'">
+    <!-- <template v-if="element.type == 'onlyGoodsModel'">
       <onlyGoodsModel :data="element" class="mb_20 width_1200_auto"></onlyGoodsModel>
-    </template>
+    </template> -->
     <!-- 混合模块 -->
-    <template v-if="element.type == 'mixModel'">
+    <!-- <template v-if="element.type == 'mixModel'">
       <mixModel :data="element" class="mb_20 width_1200_auto"></mixModel>
-    </template>
+    </template> -->
     <!-- 混合模块 -->
-    <template v-if="element.type == 'forYour'">
+    <!-- <template v-if="element.type == 'forYour'">
       <forYour :data="element" class="mb_20 width_1200_auto"></forYour>
-    </template>
+    </template> -->
     <!-- 新品排行 -->
-    <template v-if="element.type == 'newGoodsSort'">
+    <!-- <template v-if="element.type == 'newGoodsSort'">
       <new-goods-sort
         :data="element"
         class="mb_20 width_1200_auto"
       ></new-goods-sort>
-    </template>
+    </template> -->
     <!-- 首页广告 -->
-    <template v-if="element.type == 'firstAdvert'">
+    <!-- <template v-if="element.type == 'firstAdvert'">
       <first-page-advert
         :data="element"
         class="mb_20 width_1200_auto"
       ></first-page-advert>
-    </template>
+    </template> -->
     <!-- 横幅广告 -->
-    <template v-if="element.type == 'bannerAdvert'">
+    <!-- <template v-if="element.type == 'bannerAdvert'">
       <div style="width: 100%; text-align: center">
         <img
           width="1200"
@@ -127,14 +127,14 @@
           alt=""
         />
       </div>
-    </template>
-    <template v-if="element.type == 'notEnough'"
+    </template> -->
+    <!-- <template v-if="element.type == 'notEnough'"
         >
       <not-enough
         :data="element"
         class="mb_20 width_1200_auto"
       ></not-enough>
-    </template>
+    </template> -->
   </div>
 </template>
 
