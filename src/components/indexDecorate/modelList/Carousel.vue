@@ -52,7 +52,7 @@
           </div>
 
           <div class="gray-line"></div>
-          <div class="icon-list flex flex-j-sb" >
+          <!-- <div class="icon-list flex flex-j-sb" >
             <div class="icon-item" @click="entryControl(item)" :key="index" v-for="(item, index) in entranceList">
               <img class="icon" :src="require(`@/assets/iconfont/${item.icon}.png`)">
               <div>
@@ -67,7 +67,7 @@
                 {{ item.label }}
               </div>
             </div>
-          </div>
+          </div> -->
 
 
 
