@@ -26,16 +26,6 @@
             切换为{{!onlyStore ? '店铺内' : '平台'}}搜索
 
           </div>
-          <div v-if="promotionTags.length === 0"></div>
-          <div v-else class="history-list flex">
-            <div
-              v-for="(item, index) in promotionTags"
-              :key="index"
-              class="mr_10"
-            >
-              <span class="history-item" @click="selectTags(item)">{{ item }}</span>
-            </div>
-          </div>
         </template>
       </div>
     </div>
