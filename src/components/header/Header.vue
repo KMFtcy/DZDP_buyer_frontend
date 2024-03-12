@@ -43,12 +43,6 @@
         <li @click="goUserCenter('/home/MsgList')"><span class="nav-item">我的消息</span></li>
         <li v-if="$route.name !== 'Cart'" style="position:relative;">
           <Dropdown placement="bottom-start">
-            <router-link to="/cart" target="_blank">
-              <span class="nav-item" @mouseenter="getCartList">
-                <Icon size="18" type="ios-cart-outline"></Icon>
-                购物车（{{ cartNum < 100 ? cartNum : '99' }}）
-              </span>
-            </router-link>
             <DropdownMenu slot="list">
               <div class="shopping-cart-null" style="width:200px" v-show="shoppingCart.length <= 0">
                 <Icon type="ios-cart-outline" class="cart-null-icon"></Icon>
