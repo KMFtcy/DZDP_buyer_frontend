@@ -1,7 +1,8 @@
 
 const Cookie = require('js-cookie')
 module.exports = {
-  title:Cookie.get('siteName') || 'lilishop', //配置显示在浏览器标签的title、底部信息、部分信息展示的值
+  // title:Cookie.get('siteName') || 'lilishop', //配置显示在浏览器标签的title、底部信息、部分信息展示的值
+  title: 'DZDP',
   icpCard: "", // icp证
   company: {
     href: "https://pickmall.cn",
