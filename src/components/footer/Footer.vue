@@ -2,7 +2,7 @@
   <div>
     <footer class="footer">
       <div class="clearfix"></div>
-      <div class="icon-row">
+      <!-- <div class="icon-row">
         <div class="footer-icon flex flex-a-c">
           <h5 class="footer-icon-child">多</h5>
           <span class="footer-icon-text">品类齐全，轻松购物</span>
@@ -19,17 +19,17 @@
           <h5 class="footer-icon-child footer-icon-child-4">省</h5>
           <span class="footer-icon-text">天天低价，畅选无忧</span>
         </div>
-      </div>
+      </div> -->
       <div class="service-intro">
-        <div class="servece-type">
+        <!-- <div class="servece-type">
           <div class="servece-type-info" v-for="(guide, index) in guideArr" :key="index">
             <ul>
               <li v-for="(item, index) in guide" :key="index" @click="goArticle">{{item}}</li>
             </ul>
           </div>
-        </div>
+        </div> -->
         <div class="clearfix"></div>
-        <div class="friend-link flex">
+        <!-- <div class="friend-link flex">
           <div class="friend-link-item">
             <ul>
               <li v-for="(link, index) in moreLink" :key="index" @click="goArticle">
@@ -40,9 +40,9 @@
 
           </div>
 
-          </div>
+          </div> -->
         <div class="information footer-bottmom">
-          <div class="icp">
+          <!-- <div class="icp">
             <li v-if="config.icpCard">
               <a :href='"https://tsm.miit.gov.cn/dxxzsp/xkz/xkzgl/resource/qiyesearch.jsp?num="+config.icpCard+"&type=xuke"' target="_blank">
                 {{config.icpCard}}
@@ -56,7 +56,7 @@
           </div>
           <a class="flex " :href="config.company.href">
             <img class="zhizhao" src="@/assets/images/zhizhao.jpg" mode="" />{{config.company.name}}
-          </a>
+          </a> -->
         </div>
 
         <div class="clearfix"></div>
