@@ -8,7 +8,7 @@
       >
         商品分类
       </div>
-      <ul class="nav-item " v-if="showNavBar">
+      <!-- <ul class="nav-item " v-if="showNavBar">
         <li
           class="nav-lis flex flex-a-c flex-j-c"
           v-for="(item, index) in navList.list"
@@ -18,7 +18,7 @@
           {{ item.name }}
           <div class="colum" v-if="index !== navList.list.length - 1"></div>
         </li>
-      </ul>
+      </ul> -->
     </div>
     <!-- 全部商品分类 -->
     <div
