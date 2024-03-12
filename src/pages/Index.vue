@@ -26,7 +26,7 @@
     <!-- 固定头部 -->
     <hover-search class="hover-search" :class="{show: topSearchShow}"></hover-search>
     <!-- 顶部广告 -->
-    <FixedTopPage :data="topAdvert"></FixedTopPage>
+    <!-- <FixedTopPage :data="topAdvert"></FixedTopPage> -->
     <!-- 头部 包括登录，我的订单等 -->
     <BaseHeader></BaseHeader>
     <!-- 搜索框、logo -->
