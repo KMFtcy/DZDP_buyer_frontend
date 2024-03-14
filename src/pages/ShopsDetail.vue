@@ -30,10 +30,10 @@
     <!-- 商品详细展示 -->
     <ShowGoodsDetail v-if="goodsMsg.data" :detail="goodsMsg"></ShowGoodsDetail>
 
-    <empty _Title='当前商品已下架' v-if="takeDownSale">
+    <empty _Title='当前商铺已下架' v-if="takeDownSale">
       <div class="sale-btn">
         <Button size="small" class="mr_10" @click="target('/')">返回首页</Button>
-        <Button size="small" @click="target('goodsList')">返回商品列表</Button>
+        <Button size="small" @click="target('shopsList')">返回商铺列表</Button>
       </div>
     </empty>
     <Spin size="large" fix v-if="isLoading"></Spin>
