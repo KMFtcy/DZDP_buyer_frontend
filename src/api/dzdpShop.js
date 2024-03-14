@@ -17,3 +17,11 @@ export function getShopsList (params) {
     params
   })
 }
+
+export function getShopsDetail (params) {
+  return request({
+    url: `/dzdp/storeExtension/storeDetail`,
+    method: Method.GET,
+    params
+  })
+}

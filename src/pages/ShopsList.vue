@@ -207,7 +207,7 @@ export default {
       // 跳转商品详情
       let routeUrl = this.$router.push({
         path: "/shopsDetail",
-        query: { shopId: shopId},
+        query: { id: shopId},
       });
     },
     // 分页 修改页码
@@ -228,7 +228,6 @@ export default {
       apiDZDPShop
         .getShopsList(this.params)
         .then((res) => {
-          console.log(res)
           this.loading = false;
           if (res.success) {
             this.shopsList = res.result.records;
