@@ -48,7 +48,7 @@
               class="goods-show-info"
               v-for="(item, index) in shopsList"
               :key="index"
-              @click="goGoodsDetail(item.id, item.goodsId)"
+              @click="goGoodsDetail(item.id)"
             >
               <div class="goods-show-img">
                 <img width="220" height="220" :src="item.thumbnail" />
@@ -203,13 +203,12 @@ export default {
       }
       this.getShopsList();
     },
-    goGoodsDetail(skuId, goodsId) {
+    goGoodsDetail(shopId) {
       // 跳转商品详情
-      let routeUrl = this.$router.resolve({
-        path: "/goodsDetail",
-        query: { skuId, goodsId },
+      let routeUrl = this.$router.push({
+        path: "/shopsDetail",
+        query: { shopId: shopId},
       });
-      window.open(routeUrl.href, "_blank");
     },
     // 分页 修改页码
     changePageNum(val) {

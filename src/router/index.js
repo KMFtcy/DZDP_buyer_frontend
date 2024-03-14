@@ -99,7 +99,7 @@ const ShopEntry = (resolve) =>
  * DZDP店铺相关
  */
 const DZDPShopsList = (resolve) => require(["@/pages/ShopsList"], resolve);
-const DZDPShopDetail = (resolve) => require(["@/pages/GoodsDetail"], resolve);
+const DZDPShopsDetail = (resolve) => require(["@/pages/ShopsDetail"], resolve);
 
 Vue.use(Router);
 
@@ -166,9 +166,9 @@ export default new Router({
       component: DZDPShopsList,
     },
     {
-      path: "/shopDetail", // 店铺详情
-      name: "ShopDetail",
-      component: DZDPShopDetail,
+      path: "/shopsDetail", // 店铺详情
+      name: "ShopsDetail",
+      component: DZDPShopsDetail,
     },
     {
       path: "/shoppingCart", // 头部购物车
