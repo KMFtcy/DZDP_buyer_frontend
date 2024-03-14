@@ -8,12 +8,7 @@
         <Icon type="ios-arrow-forward" />
 
         <div class="bar" v-if="tabBar.first">
-          {{ tabBar.first.name }} <Icon type="ios-arrow-down" />
-          <ul>
-            <li v-for="item in tabBar.children" :key="item.id"  @click="cateClick(item,2)">
-              {{ item.name }}
-            </li>
-          </ul>
+          {{ tabBar.first.name }}
         </div>
         <Icon type="ios-arrow-forward" v-if="tabBar.first" />
 
@@ -422,18 +417,16 @@ export default {
     }
   }
   .bar {
-    font-size: 12px;
+    font-size: 15px;
+    font-weight: bold;
     position: relative;
     background: #fff;
-    border: 1px solid #999;
     padding: 0 8px;
-    min-width: 85px;
     text-align: center;
     margin: 0 3px;
     &:hover {
       color: $theme_color;
       border-color: $theme_color;
-      border-bottom-color: #fff;
       cursor: pointer;
       ul {
         display: block;
