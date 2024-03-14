@@ -95,6 +95,12 @@ const UserMain = (resolve) => require(["@/pages/home/Main"], resolve);
 const ShopEntry = (resolve) =>
   require(["@/pages/shopEntry/ShopEntry"], resolve);
 
+/**
+ * DZDP店铺相关
+ */
+const DZDPShopsList = (resolve) => require(["@/pages/ShopsList"], resolve);
+const DZDPShopDetail = (resolve) => require(["@/pages/GoodsDetail"], resolve);
+
 Vue.use(Router);
 
 /**
@@ -153,6 +159,16 @@ export default new Router({
       name: "PointGoodsDetail",
       component: PointGoodsDetail,
       meta: { title: "积分商品" },
+    },
+    {
+      path: "/shopsList", // 店铺列表
+      name: "ShopsList",
+      component: DZDPShopsList,
+    },
+    {
+      path: "/shopDetail", // 店铺详情
+      name: "ShopDetail",
+      component: DZDPShopDetail,
     },
     {
       path: "/shoppingCart", // 头部购物车

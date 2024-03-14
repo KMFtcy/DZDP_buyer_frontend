@@ -6,7 +6,7 @@
         @mouseenter="showFirstLists"
         @mouseleave="showFirstList = false"
       >
-        商品分类
+        全部分类
       </div>
       <!-- <ul class="nav-item " v-if="showNavBar">
         <li
@@ -38,15 +38,14 @@
           <li
             v-for="(item, index) in cateList"
             :key="index"
-            @mouseenter="showDetail(index)"
           >
-            <span class="nav-side-item" @click="goGoodsList(item.id)">{{
+            <span class="nav-side-item" @click="goShopsList(item.categoryId)">{{
               item.name
             }}</span>
             <span v-for="(second, secIndex) in item.children" :key="secIndex">
               <span v-if="secIndex < 2"> / </span>
               <span
-                @click="goGoodsList(second.id, second.parentId)"
+                @click="goShopsList(second.categoryId, item.categoryId)"
                 class="nav-side-item"
                 v-if="secIndex < 2"
                 >{{ second.name }}</span
@@ -66,7 +65,7 @@
         <div class="nav-detail-item">
           <template v-for="(item,index) in panelData">
             <span
-              @click="goGoodsList(item.id,item.parentId)"
+              @click="goShopsList(item.id,item.parentId)"
               v-if="index < 8"
               :key="index"
               >{{ item.name }}<Icon type="ios-arrow-forward"
@@ -81,7 +80,7 @@
           >
             <span
               class="detail-item-title"
-              @click="goGoodsList(items.id, items.parentId)"
+              @click="goShopsList(items.id, items.parentId)"
             >
               {{ items.name }} <Icon type="ios-arrow-forward" />
               <span class="glyphicon glyphicon-menu-right"></span>
@@ -89,7 +88,7 @@
             <div>
               <span
                 v-for="(item, subIndex) in items.children"
-                @click="goGoodsList(item.id, items.id, items.parentId)"
+                @click="goShopsList(item.id, items.id, items.parentId)"
                 :key="subIndex"
                 class="detail-item"
                 >{{ item.name }}</span
@@ -104,6 +103,7 @@
 
 <script>
 import { getCategory } from "@/api/goods";
+import { getShopCategoryList } from "@/api/dzdpShop";
 import storage from "@/plugins/storage.js";
 export default {
   name: "GoodsListNav",
@@ -175,7 +175,8 @@ export default {
     getCate() {
       // 获取分类数据
       if (this.hover) return false;
-      getCategory(0).then((res) => {
+      getShopCategoryList().then((res) => {
+        console.log(res)
         if (res.success) {
           this.cateList = res.result;
           this.$store.commit("SET_CATEGORY", res.result);
@@ -193,7 +194,7 @@ export default {
       this.panel = true;
       this.panelData = this.cateList[index].children;
     },
-    goGoodsList(id, secondId, firstId) {
+    goShopsList(id, secondId, firstId) {
       // 分类共有三级，传全部分类过去
       const arr = [firstId, secondId, id];
       if (!arr[1]) {
@@ -202,11 +203,11 @@ export default {
       if (!arr[0]) {
         arr.shift();
       }
-      let routerUrl = this.$router.resolve({
-        path: "/goodsList",
+      console.log(arr)
+      let routerUrl = this.$router.push({
+        path: "/shopsList",
         query: { categoryId: arr.toString() },
       });
-      window.open(routerUrl.href, "_blank");
     },
   },
   mounted() {
