@@ -9,3 +9,11 @@ export function getShopCategoryList () {
     method: Method.GET,
   })
 }
+
+export function getShopsList (params) {
+  return request({
+    url: '/dzdp/storeExtension/storeList',
+    method: Method.GET,
+    params
+  })
+}

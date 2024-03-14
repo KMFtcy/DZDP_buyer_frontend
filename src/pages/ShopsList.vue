@@ -42,11 +42,11 @@
           </div>
           <!-- 列表 -->
           <div class="goods-list">
-            <empty v-if="goodsList.length === 0" />
+            <empty v-if="shopsList.length === 0" />
             <div
               v-else
               class="goods-show-info"
-              v-for="(item, index) in goodsList"
+              v-for="(item, index) in shopsList"
               :key="index"
               @click="goGoodsDetail(item.id, item.goodsId)"
             >
@@ -129,7 +129,7 @@ import ShopsClassNav from "@/components/nav/ShopsClassNav";
 import * as apiGoods from "@/api/goods";
 import * as apiDZDPShop from "@/api/dzdpShop";
 export default {
-  name: "GoodsList",
+  name: "ShopsList",
   beforeRouteEnter(to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -145,7 +145,7 @@ export default {
         { title: "评论数", en: "commentNum" },
         { title: "新品", en: "releaseTime" },
       ],
-      goodsList: [], // 商品列表
+      shopsList: [], // 商品列表
       loading: false, // 加载状态
       total: 0, // 列表总数
       params: {
@@ -226,12 +226,13 @@ export default {
     // 获取商品列表
     getShopsList() {
       this.loading = true;
-      apiGoods
-        .goodsList(this.params)
+      apiDZDPShop
+        .getShopsList(this.params)
         .then((res) => {
+          console.log(res)
           this.loading = false;
           if (res.success) {
-            this.goodsList = res.result.records;
+            this.shopsList = res.result;
             this.total = res.result.total;
           }
         })

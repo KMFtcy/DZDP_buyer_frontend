@@ -228,6 +228,7 @@ export default {
   },
   methods: {
     getNav () { // 获取商品分类，分类下展示
+      this.tabBar = null
       if (!this.$route.query.categoryId) return
       if (!this.cateList.length) { // 商品分类存储在localstorage，接口未调用成功前再次刷新数据
         setTimeout(() => {
@@ -236,7 +237,6 @@ export default {
         return
       }
       const arr = this.$route.query.categoryId.split(',')
-      // console.log(this.cateList)
       if (arr.length > 0) {
         this.tabBar = this.cateList.filter(e => {
           return e.categoryId == arr[0]
