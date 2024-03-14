@@ -231,7 +231,7 @@ export default {
           console.log(res)
           this.loading = false;
           if (res.success) {
-            this.shopsList = res.result;
+            this.shopsList = res.result.records;
             this.total = res.result.total;
           }
         })

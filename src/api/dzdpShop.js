@@ -12,7 +12,7 @@ export function getShopCategoryList () {
 
 export function getShopsList (params) {
   return request({
-    url: '/dzdp/storeExtension/storeList',
+    url: `/dzdp/storeExtension/storeList`,
     method: Method.GET,
     params
   })
