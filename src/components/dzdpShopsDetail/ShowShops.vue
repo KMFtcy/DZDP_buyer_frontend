@@ -2,45 +2,37 @@
   <div class="wrapper">
     <div class="item-detail-show">
       <div id="basic-info" class="basic-info default nug_shop_ab_pv-a"> <s class="cover J_cover"></s>
-        <h1 class="shop-name"> {{ detail.storeName }} <a class="qr-contrainer" href="//www.dianping.com/events/m/index.htm"
-            data-click-name="手机买单" rel="nofollow"
-            onclick="_hip.push(['mv', { module: 'shopinfo_hoverQR', action: 'click'}])">
-          </a> </h1>
+        <h1 class="shop-name"> {{ detail.storeName }} </h1>
         <div class="brief-info">
           <div class="star-wrapper">
-            <div class="nebula-mid-rank-stars nebula-mid-str40"></div>
-            <div class="mid-score score-40">4.4</div>
-          </div> <span id="reviewCount" class="item">31214条评价</span> <span id="avgPriceTitle" class="item">人均：89元</span>
-          <span id="comment_score"> <span class="item">口味：4.4</span> <span class="item">环境：4.5</span> <span
-              class="item">服务：4.4</span> </span>
-        </div>
-        <div class="expand-info address" itemprop="street-address"> <span class="info-name">地址：</span>
-          <div id="J_map-show" class="map_address"> <span class="item" itemprop="street-address" id="address">
-              {{ detail.storeAddressDetail }} </span>
+            <Rate disabled :value="Number(detail.descriptionScore)" allow-half class="remarks-star"></Rate>
+            <div class="mid-score score-40">{{ detail.descriptionScore }}</div>
+          </div> <span id="reviewCount" class="item">{{detail.commentNum}}条评价</span>
+            <span id="comment_score">
+              <span class="item">描述评分：{{ detail.descriptionScore }}</span>
+              <span class="item">物流评分：{{ detail.deliveryScore }}</span>
+              <span class="item">服务评分：{{ detail.serviceScore }}</span>
+            </span>
+          </div>
+        <div class="expand-info address" itemprop="street-address">
+          <span class="info-name">地址：</span>
+          <div id="J_map-show" class="map_address">
+            <span class="item" itemprop="street-address" id="address"> {{ detail.storeAddressDetail }} </span>
             <div class="addressIcon"></div>
           </div>
         </div>
         <p class="expand-info tel"> <span class="info-name">电话：</span> {{ detail.phone }} </p>
-        <div class="promosearch-wrapper"></div> 
-        <div class="other J-other Hide">
-          <p class="info info-indent"> <span class="info-name">营业时间：</span> <span class="item"> {{ detail.businessHour }} </span> </p>
-          <div id="license-wrappper"></div>
-          <p class="info J-feature Hide"></p>
-          <p id="park" class="info info-indent J-park Hide"></p>
-          <div id="tips-wrapper"></div>
+        <p class="expand-info tel"> <span class="info-name">营业时间：</span> {{ detail.businessHour }} </p>
+        <div class="action">
+          <a class="write left-action" href="//www.dianping.com/shop/k7oNYLP4CBg2Wi2E/review"
+            target="_blank" rel="nofollow" data-click-name="写评价">
+            <i class="icon"></i>
+            <span id="dpReviewBtn">写评价</span>
+          </a>
         </div>
-        <div class="action"> <a class="write left-action" href="//www.dianping.com/shop/k7oNYLP4CBg2Wi2E/review"
-            target="_blank" rel="nofollow" data-click-name="写评价"> <i class="icon"></i><span
-              id="dpReviewBtn">写评价</span></a>
-          <div id="booking-wrapper" data-click-name="订座"></div> <span class="right-action"> <a class="share J-weixin"
-              rel="nofollow" title="微信分享" data-click-name="微信分享"><i class="icon"></i></a> <a id="fav"
-              class="favorite J-favorite" rel="nofollow" title="收藏" data-click-name="收藏"><i class="icon"></i></a> <a
-              class="report" title="报错" href="/shop/k7oNYLP4CBg2Wi2E/edit" rel="nofollow" target="_blank"
-              data-click-name="报错"><i class="icon"></i></a> <a class="action-more J-action-more"><i
-                class="icon"></i></a> </span>
-        </div>
-        <div id="tuiguangAd-wrapper">
-        </div>
+      </div>
+      <div class="store-image">
+        <img :src="detail.storeImages[0].url">
       </div>
     </div>
   </div>
@@ -103,6 +95,13 @@ export default {
       loading: false, // 立即购买loading
       loading1: false, // 加入购物车loading
       isCollected: false, // 是否收藏
+      images: {
+          'normal_size':  // required
+          [
+            {'id':'unique id', 'url': 'image url'},
+            {'id':'unique id', 'url': 'image url'}
+          ]
+        }
     };
   },
   components: { PicZoom },
@@ -119,267 +118,223 @@ export default {
 
 <style scoped lang="scss">
 #basic-info {
-    --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    color: #282828;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    position: relative;
-    margin: 0;
-    width: 829px;
-    background-color: #fff;
-    margin-right: 0;
-    min-height: 187px;
-    border: 1px solid #f0f0f0;
-    -webkit-box-shadow: none;
-    padding: 18px 20px 50px;
-    height: initial;
+  --rem: 16;
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  color: #282828;
+  font: 12px/1.5 PingFangSC-Regular, 'Hiragino Sans GB', Helvetica;
+  -webkit-font-smoothing: auto;
+  outline: 0;
+  position: relative;
+  margin: 0;
+  width: 700px;
+  background-color: #fff;
+  margin-right: 0;
+  min-height: 187px;
+  border: 1px solid #f0f0f0;
+  padding: 18px 20px 50px;
+  height: initial;
 }
 
-#basic-info > h1 {
-    --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 22px;
-    line-height: 33px;
-    margin-top: -7.5px;
-    color: #333;
-    font-weight: 700;
+.store-image{
+  position: relative;
+  width: 300px;
+  min-height: 187px;
+  background-color: #fff;
+  margin-left: 10px;
+  border: 1px solid #f0f0f0;
 }
 
-#basic-info > div.brief-info {
-      --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    margin-top: 6px;
-    font-size: 14px;
-    color: #ebebeb;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
+.store-image img{
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
 }
 
-#basic-info > div.expand-info.address {
-      --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-family: 'PingFangSC-Regular-address';
-    font-size: 14px;
-    margin-top: 7px;
-    height: 28px;
-    line-height: 28px;
-    color: #666;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
+#basic-info>h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 22px;
+  line-height: 33px;
+  margin-top: -7.5px;
+  color: #333;
+  font-weight: 700;
 }
 
-#basic-info > p {
-      --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 14px;
-    margin-top: 6px;
-    color: #666;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
+#basic-info>div.brief-info {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #ebebeb;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
 }
 
-#basic-info > div.action {
-      --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    color: #282828;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    height: 36px;
-    left: 20px;
+#basic-info>div.expand-info.address {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: 'PingFangSC-Regular-address';
+  font-size: 14px;
+  margin-top: 7px;
+  height: 28px;
+  line-height: 28px;
+  color: #666;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
 }
 
-#tuiguangAd-wrapper {
-      --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    color: #282828;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    height: 36px;
-    left: 20px;
+#basic-info>p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 14px;
+  margin-top: 6px;
+  color: #666;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
 }
 
-#basic-info > div.action > a {
-      --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    -webkit-tap-highlight-color: transparent;
-    margin: 0;
-    border: 0;
-    outline: 0;
-    text-decoration: none;
-    cursor: pointer;
-    float: left;
-    color: #fff;
-    width: 120px;
-    height: 34px;
-    line-height: 34px;
-    background: #FF794D;
-    border-radius: 1px;
-    padding: 0;
-    font-size: 0;
-    text-align: center;
-    margin-right: 8px;
+#basic-info>div.action {
+  outline: 0;
+  margin: -8px 0;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  height: 36px;
+  left: 20px;
 }
 
-#basic-info > div.brief-info > div {
-    --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    font-size: 14px;
-    color: #ebebeb;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: inline-flex;
-    align-items: center;
+#basic-info>div.action>a {
+  margin: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+  float: left;
+  color: #fff;
+  width: 120px;
+  height: 34px;
+  line-height: 34px;
+  background: #FF794D;
+  border-radius: 1px;
+  padding: 0;
+  font-size: 0;
+  text-align: center;
+  margin-right: 8px;
 }
 
-div.brief-info.item{
-    --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    font-size: 14px;
-    outline: 0;
-    padding: 0;
-    border: 0;
-    margin: 0 10px;
-    vertical-align: middle;
-    color: #666;
-    margin-right: 0;
+#basic-info>div.brief-info>div {
+  --rem: 16;
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  font: 12px/1.5 PingFangSC-Regular, 'Hiragino Sans GB', Helvetica;
+  -webkit-font-smoothing: auto;
+  font-size: 14px;
+  color: #ebebeb;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
 }
 
-#basic-info > div.action > a {
-    --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    -webkit-tap-highlight-color: transparent;
-    margin: 0;
-    border: 0;
-    outline: 0;
-    text-decoration: none;
-    cursor: pointer;
-    float: left;
-    color: #fff;
-    width: 120px;
-    height: 34px;
-    line-height: 34px;
-    background: #FF794D;
-    border-radius: 1px;
-    padding: 0;
-    font-size: 0;
-    text-align: center;
-    margin-right: 8px;
+div.brief-info.item {
+  font-size: 14px;
+  outline: 0;
+  padding: 0;
+  border: 0;
+  margin: 0 10px;
+  vertical-align: middle;
+  color: #666;
+  margin-right: 0;
 }
 
-#basic-info > div.action > a > i {
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
-    color: #fff;
-    line-height: 34px;
-    font-size: 0;
-    text-align: center;
-    outline: 0;
-    font-style: normal;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: inline-block;
-    vertical-align: middle;
-    width: 16px;
-    height: 16px;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAjVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8DizOFAAAALnRSTlMAifn9SvQH7NmrfkMwHwvLuZFmWBT24NLGuF1OPjQZEAPxwbSke268m5qLclM6+4uWvAAAAM1JREFUOMu10dkOgjAQheFhabGgoiKKC4r7ft7/8SwlcYlDiSaeq0m+/27oX+tuVydp8wOAjaz3NcJI6MLiRHOBieQ9K70qCsaXGUTbXBEwYzyGcgNThPByzh3yTbED9h8+HGsnU1jcFALegPdqivNF6+FOs0+/9s6bJ58+enG3ya+cq6czD3AA17c4xd5RF5X7jA+9jPqatKec0xQhlYVCGhG3LW5UFhC8U7AqSEZnV8x5zxFfJila/TbxS4BADTpUO5nkBf2+HqzrNQZ3lu0fMOGbbw4AAAAASUVORK5CYII=) no-repeat;
-    background-size: contain;
-    padding-right: 3px;
-    margin-right: 0;
+#basic-info>div.action>a {
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+  float: left;
+  color: #fff;
+  width: 120px;
+  height: 34px;
+  line-height: 34px;
+  background: #FF794D;
+  border-radius: 1px;
+  padding: 0;
+  font-size: 0;
+  text-align: center;
+  margin-right: 8px;
+}
+
+#basic-info>div.action>a>i {
+  cursor: pointer;
+  color: #fff;
+  line-height: 34px;
+  font-size: 0;
+  text-align: center;
+  outline: 0;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAjVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8DizOFAAAALnRSTlMAifn9SvQH7NmrfkMwHwvLuZFmWBT24NLGuF1OPjQZEAPxwbSke268m5qLclM6+4uWvAAAAM1JREFUOMu10dkOgjAQheFhabGgoiKKC4r7ft7/8SwlcYlDiSaeq0m+/27oX+tuVydp8wOAjaz3NcJI6MLiRHOBieQ9K70qCsaXGUTbXBEwYzyGcgNThPByzh3yTbED9h8+HGsnU1jcFALegPdqivNF6+FOs0+/9s6bJ58+enG3ya+cq6czD3AA17c4xd5RF5X7jA+9jPqatKec0xQhlYVCGhG3LW5UFhC8U7AqSEZnV8x5zxFfJila/TbxS4BADTpUO5nkBf2+HqzrNQZ3lu0fMOGbbw4AAAAASUVORK5CYII=) no-repeat;
+  background-size: contain;
+  padding-right: 3px;
+  margin-right: 0;
 }
 
 #dpReviewBtn {
-    --rem: 16;
-    --swiper-theme-color: #007aff;
-    --swiper-navigation-size: 44px;
-    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
-    -webkit-font-smoothing: auto;
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
-    color: #fff;
-    line-height: 34px;
-    text-align: center;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 16px;
+
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  color: #fff;
+  line-height: 34px;
+  text-align: center;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
 }
 
 #basic-info .brief-info .item {
   margin: 0 10px;
   color: #666;
 }
+
+.info .info-indent {
+ 
+  font-size: 12px;
+  color: #666;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  position: relative;
+  padding-left: 70px;
+  margin-top: 10px;
+}
+
 /******************商品图片及购买详情开始******************/
 .item-detail-see {
   width: 175px;
