@@ -1,18 +1,91 @@
 <template>
   <div style="height:auto;">
-
+    <div class="item-intro-show">
+      <div class="item-intro-detail" ref="itemIntroDetail">
+        <div class="item-intro-nav item-tabs">
+              <div class="remarks-container" ref="itemGoodsComment">
+                <!-- <div class="remarks-analyse-box">
+                  <div class="remarks-analyse-goods">
+                    <i-circle :percent="skuDetail.grade" stroke-color="#5cb85c">
+                      <span class="remarks-analyse-num">{{skuDetail.grade}}%</span>
+                      <p class="remarks-analyse-title">好评率</p>
+                    </i-circle>
+                  </div>
+                </div> -->
+                <div class="remarks-bar">
+                  <span @click="viewByGrade('')" :class="{selectedBar: commentParams.grade === ''}">全部({{commentTypeNum.all}})</span>
+                  <span @click="viewByGrade('GOOD')" :class="{selectedBar: commentParams.grade === 'GOOD'}">好评({{commentTypeNum.good}})</span>
+                  <span @click="viewByGrade('MODERATE')" :class="{selectedBar: commentParams.grade === 'MODERATE'}">中评({{commentTypeNum.moderate}})</span>
+                  <span @click="viewByGrade('WORSE')" :class="{selectedBar: commentParams.grade === 'WORSE'}">差评({{commentTypeNum.worse}})</span>
+                </div>
+                <div style="text-align: center;margin-top: 20px;" v-if="commentList.length === 0">
+                  暂无评价数据
+                </div>
+                <div class="remarks-box" v-for="(item,index) in commentList" :key="index" v-else>
+                  index
+                  <!-- <div class="remarks-user">
+                    <Avatar :src="item.memberProfile" />
+                    <span class="remarks-user-name">{{item.memberName | secrecyMobile}}</span>
+                  </div>
+                  <div class="remarks-content-box">
+                    <p>
+                      <Rate disabled :value="Number(item.descriptionScore)" allow-half class="remarks-star"></Rate>
+                    </p>
+                    <p class="remarks-content">{{item.content}}</p>
+                    <div class="comment-img" v-if="item.images">
+                      <div v-for="(img, imgIndex) in item.images.split(',')"
+                       @click="previewImg(img, item)"
+                       :class="{borderColor:img === item.previewImg}"
+                       :key="imgIndex">
+                        <img :src="img" alt="">
+                      </div>
+                    </div>
+                    <div class="preview-img"  v-if="item.previewimg"  @click.prevent="hidepreviewimg(item)">
+                      <div>
+                        <span @click.stop="rotatePreviewImg(0, item)"><Icon type="md-refresh" />左转</span>
+                        <span @click.stop="rotatePreviewImg(1, item)"><Icon type="md-refresh" />右转</span>
+                      </div>
+                      <img :src="item.previewImg" :style="{transform:`rotate(${item.deg}deg)`}" width="198" alt="">
+                    </div>
+                    <p class="remarks-sub">
+                      <span class="remarks-item">{{item.goodsName}}</span>
+                      <span class="remarks-time">{{item.createTime}}</span>
+                    </p>
+                  </div> -->
+                </div>
+                <div class="remarks-page">
+                  <Page :total="commentTotal" size="small"
+                    @on-change="changePageNum"
+                    @on-page-size-change="changePageSize"
+                    :page-size="commentParams.pageSize"
+                    ></Page>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { goodsComment, goodsCommentNum } from '@/api/member.js';
+import { getShopsComments } from '../../api/dzdpShop';
 export default {
-  name: 'ShowGoodsDetail',
+  name: 'ShowShopsDetail',
   props: {
     detail: { // 商品详情
       type: Object,
       default: null
     }
+  },
+  watch: {
+    detail: {
+      handler(val) {
+        this.detail = val;
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   data () {
     return {
@@ -21,7 +94,7 @@ export default {
         pageNumber: 1,
         pageSize: 10,
         grade: '',
-        goodsId: ''
+        storeId: ''
       },
       commentTypeNum: {}, // 评论数量，包括好中差分别的数量
       commentTotal: 0, // 评论总数
@@ -30,36 +103,70 @@ export default {
   },
   computed: {
     // 商品详情
-    skuDetail () {
-      return this.detail.data;
+    shopDetail () {
+      return this.detail;
     }
   },
   methods: {
 
+    getCommentsList () { // 获取评论列表
+      console.log(1)
+      this.commentParams.storeId = this.shopDetail.id;
+      getShopsComments(this.commentParams).then(res => {
+        if (res.success) {
+          this.commentList = res.result.records
+          this.commentTotal = res.result.total;
+          this.changeHeight('itemGoodsComment')
+          console.log(res)
+        } else {
+          this.$Message.error(res.message);
+          this.isLoading = false
+        }
+        })
+        .catch((e) => {
+          console.log(e)
+          this.isLoading = false
+      });
+      // goodsCommentNum(this.skuDetail.goodsId).then(res => {
+      //   if (res.success) {
+      //     this.commentTypeNum = res.result;
+      //   }
+      // });
+    },
     changePageNum (val) { // 修改评论页码
       this.commentParams.pageNumber = val;
-      this.getList();
+      this.getCommentsList();
     },
     changePageSize (val) { // 修改评论页数
       this.commentParams.pageNumber = 1;
       this.commentParams.pageSize = val;
-      this.getList();
+      this.getCommentsList();
     },
-
+    changeHeight (name) { // 设置商品详情高度
+      let heightCss = window.getComputedStyle(this.$refs[name]).height;
+      heightCss = parseInt(heightCss.substr(0, heightCss.length - 2)) + 89;
+      this.$refs.itemIntroDetail.style.height = heightCss + 'px';
+    },
+    handleScroll () { // 监听页面滚动
+      if (this.onceFlag) {
+        this.$nextTick(() => {
+          this.changeHeight('itemGoodsComment')
+        });
+        this.onceFlag = false
+      }
+    }
   },
   mounted () {
-    // this.$nextTick(() => { // 手动设置详情高度，解决无法撑开问题
-    //   setTimeout(this.changeHeight('itemIntroGoods'), 2000);
-    // });
-    // window.addEventListener('scroll', this.handleScroll)
-    // this.getList();
-    // if (this.skuDetail.grade === null || this.skuDetail.grade === undefined) {
-    //   this.skuDetail.grade = 100
-    // }
+    // console.log(this.detail)
+    this.$nextTick(() => { // 手动设置详情高度，解决无法撑开问题
+      setTimeout(this.changeHeight('itemGoodsComment'), 2000);
+      setTimeout(this.getCommentsList(), 2000);
+    });
+    window.addEventListener('scroll', this.handleScroll)
+    this.getCommentsList();
   }
 };
 </script>
-
 <style scoped lang="scss">
 .item-intro{
   >img{
