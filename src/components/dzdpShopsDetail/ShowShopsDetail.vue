@@ -49,7 +49,7 @@
                     </div>
                     <p class="remarks-sub">
                       <span class="remarks-item">{{item.storeName}}</span>
-                      <!-- <span class="remarks-time">{{item.createdTime}}</span> -->
+                      <span class="remarks-time">{{item.createdTime}}</span>
                     </p>
                   </div>
                 </div>
@@ -81,7 +81,7 @@ export default {
   watch: {
     detail: {
       handler(val) {
-        this.detail = val;
+        this.getCommentsList()
       },
       deep: true,
       immediate: true,
@@ -115,8 +115,7 @@ export default {
         if (res.success) {
           this.commentList = res.result.records
           this.commentTotal = res.result.total;
-          this.changeHeight('itemGoodsComment')
-          console.log(res)
+          setTimeout(this.changeHeight('itemGoodsComment'), 1000);
         } else {
           this.$Message.error(res.message);
           this.isLoading = false
@@ -162,7 +161,6 @@ export default {
     },
   },
   mounted () {
-    // console.log(this.detail)
     this.$nextTick(() => { // 手动设置详情高度，解决无法撑开问题
       setTimeout(this.changeHeight('itemGoodsComment'), 2000);
     });
