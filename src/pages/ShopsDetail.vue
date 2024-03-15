@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #f6f6f6">
+  <div style="background: #fff">
     <BaseHeader></BaseHeader>
     <Search></Search>
     <div class="shop-item-path">
