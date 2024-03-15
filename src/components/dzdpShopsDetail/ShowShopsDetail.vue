@@ -22,18 +22,17 @@
                   暂无评价数据
                 </div>
                 <div class="remarks-box" v-for="(item,index) in commentList" :key="index" v-else>
-                  index
-                  <!-- <div class="remarks-user">
+                  <div class="remarks-user">
                     <Avatar :src="item.memberProfile" />
                     <span class="remarks-user-name">{{item.memberName | secrecyMobile}}</span>
                   </div>
                   <div class="remarks-content-box">
                     <p>
-                      <Rate disabled :value="Number(item.descriptionScore)" allow-half class="remarks-star"></Rate>
+                      <Rate disabled :value="Number(item.starNum)" allow-half class="remarks-star"></Rate>
                     </p>
-                    <p class="remarks-content">{{item.content}}</p>
+                    <p class="remarks-content">{{item.comment}}</p>
                     <div class="comment-img" v-if="item.images">
-                      <div v-for="(img, imgIndex) in item.images.split(',')"
+                      <div v-for="(img, imgIndex) in item.images"
                        @click="previewImg(img, item)"
                        :class="{borderColor:img === item.previewImg}"
                        :key="imgIndex">
@@ -48,10 +47,10 @@
                       <img :src="item.previewImg" :style="{transform:`rotate(${item.deg}deg)`}" width="198" alt="">
                     </div>
                     <p class="remarks-sub">
-                      <span class="remarks-item">{{item.goodsName}}</span>
-                      <span class="remarks-time">{{item.createTime}}</span>
+                      <span class="remarks-item">{{item.storeName}}</span>
+                      <!-- <span class="remarks-time">{{item.createdTime}}</span> -->
                     </p>
-                  </div> -->
+                  </div>
                 </div>
                 <div class="remarks-page">
                   <Page :total="commentTotal" size="small"
@@ -110,7 +109,6 @@ export default {
   methods: {
 
     getCommentsList () { // 获取评论列表
-      console.log(1)
       this.commentParams.storeId = this.shopDetail.id;
       getShopsComments(this.commentParams).then(res => {
         if (res.success) {
@@ -154,13 +152,18 @@ export default {
         });
         this.onceFlag = false
       }
-    }
+    },
+    previewImg (img, item) { // 预览图片
+      this.$set(item, 'previewImg', img);
+      this.$nextTick(() => {
+        this.changeHeight('itemGoodsComment')
+      });
+    },
   },
   mounted () {
     // console.log(this.detail)
     this.$nextTick(() => { // 手动设置详情高度，解决无法撑开问题
       setTimeout(this.changeHeight('itemGoodsComment'), 2000);
-      setTimeout(this.getCommentsList(), 2000);
     });
     window.addEventListener('scroll', this.handleScroll)
     this.getCommentsList();
