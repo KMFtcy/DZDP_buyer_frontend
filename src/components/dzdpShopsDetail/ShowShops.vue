@@ -115,7 +115,6 @@ export default {
   methods: {
   },
   mounted() {
-    console.log(this.detail)
     // document.title = this.skuDetail.goodsName;
   },
 };
