@@ -13,10 +13,11 @@
                   </div>
                 </div> -->
                 <div class="remarks-bar">
-                  <span @click="viewByGrade('')" :class="{selectedBar: commentParams.grade === ''}">全部({{commentTypeNum.all}})</span>
+                  <span @click="viewByGrade('')" :class="{selectedBar: commentParams.grade === ''}">全部</span>
+                  <!-- <span @click="viewByGrade('')" :class="{selectedBar: commentParams.grade === ''}">全部({{commentTypeNum.all}})</span>
                   <span @click="viewByGrade('GOOD')" :class="{selectedBar: commentParams.grade === 'GOOD'}">好评({{commentTypeNum.good}})</span>
                   <span @click="viewByGrade('MODERATE')" :class="{selectedBar: commentParams.grade === 'MODERATE'}">中评({{commentTypeNum.moderate}})</span>
-                  <span @click="viewByGrade('WORSE')" :class="{selectedBar: commentParams.grade === 'WORSE'}">差评({{commentTypeNum.worse}})</span>
+                  <span @click="viewByGrade('WORSE')" :class="{selectedBar: commentParams.grade === 'WORSE'}">差评({{commentTypeNum.worse}})</span> -->
                 </div>
                 <div style="text-align: center;margin-top: 20px;" v-if="commentList.length === 0">
                   暂无评价数据
