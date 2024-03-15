@@ -115,7 +115,6 @@ export default {
         if (res.success) {
           this.commentList = res.result.records
           this.commentTotal = res.result.total;
-          setTimeout(this.changeHeight('itemGoodsComment'), 1000);
         } else {
           this.$Message.error(res.message);
           this.isLoading = false
@@ -159,13 +158,14 @@ export default {
         this.changeHeight('itemGoodsComment')
       });
     },
+    updateCommentsHeight(){
+      this.changeHeight('itemGoodsComment')
+    }
   },
   mounted () {
-    this.$nextTick(() => { // 手动设置详情高度，解决无法撑开问题
-      setTimeout(this.changeHeight('itemGoodsComment'), 2000);
-    });
     window.addEventListener('scroll', this.handleScroll)
     this.getCommentsList();
+    setTimeout(this.updateCommentsHeight, 500);
   }
 };
 </script>
