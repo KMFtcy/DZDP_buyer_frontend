@@ -1,7 +1,47 @@
 <template>
   <div class="wrapper">
     <div class="item-detail-show">
-   
+      <div id="basic-info" class="basic-info default nug_shop_ab_pv-a"> <s class="cover J_cover"></s>
+        <h1 class="shop-name"> {{ detail.storeName }} <a class="qr-contrainer" href="//www.dianping.com/events/m/index.htm"
+            data-click-name="手机买单" rel="nofollow"
+            onclick="_hip.push(['mv', { module: 'shopinfo_hoverQR', action: 'click'}])">
+          </a> </h1>
+        <div class="brief-info">
+          <div class="star-wrapper">
+            <div class="nebula-mid-rank-stars nebula-mid-str40"></div>
+            <div class="mid-score score-40">4.4</div>
+          </div> <span id="reviewCount" class="item">31214条评价</span> <span id="avgPriceTitle" class="item">人均：89元</span>
+          <span id="comment_score"> <span class="item">口味：4.4</span> <span class="item">环境：4.5</span> <span
+              class="item">服务：4.4</span> </span>
+        </div>
+        <div class="expand-info address" itemprop="street-address"> <span class="info-name">地址：</span>
+          <div id="J_map-show" class="map_address"> <span class="item" itemprop="street-address" id="address">
+              {{ detail.storeAddressDetail }} </span>
+            <div class="addressIcon"></div>
+          </div>
+        </div>
+        <p class="expand-info tel"> <span class="info-name">电话：</span> {{ detail.phone }} </p>
+        <div class="promosearch-wrapper"></div> 
+        <div class="other J-other Hide">
+          <p class="info info-indent"> <span class="info-name">营业时间：</span> <span class="item"> {{ detail.businessHour }} </span> </p>
+          <div id="license-wrappper"></div>
+          <p class="info J-feature Hide"></p>
+          <p id="park" class="info info-indent J-park Hide"></p>
+          <div id="tips-wrapper"></div>
+        </div>
+        <div class="action"> <a class="write left-action" href="//www.dianping.com/shop/k7oNYLP4CBg2Wi2E/review"
+            target="_blank" rel="nofollow" data-click-name="写评价"> <i class="icon"></i><span
+              id="dpReviewBtn">写评价</span></a>
+          <div id="booking-wrapper" data-click-name="订座"></div> <span class="right-action"> <a class="share J-weixin"
+              rel="nofollow" title="微信分享" data-click-name="微信分享"><i class="icon"></i></a> <a id="fav"
+              class="favorite J-favorite" rel="nofollow" title="收藏" data-click-name="收藏"><i class="icon"></i></a> <a
+              class="report" title="报错" href="/shop/k7oNYLP4CBg2Wi2E/edit" rel="nofollow" target="_blank"
+              data-click-name="报错"><i class="icon"></i></a> <a class="action-more J-action-more"><i
+                class="icon"></i></a> </span>
+        </div>
+        <div id="tuiguangAd-wrapper">
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +69,6 @@ export default {
   watch: {
     detail: {
       handler(val) {
-        console.log(val)
         this.skuDetail = val.data;
         this.wholesaleList = val.wholesaleList;
         if (this.wholesaleList && this.wholesaleList.length > 0) {
@@ -43,8 +82,8 @@ export default {
   },
   data() {
     return {
-      showGoodsVideo:false,
-      goodsVideo:"",
+      showGoodsVideo: false,
+      goodsVideo: "",
       wholesaleList: [],
       count: 1, // 商品数量
       imgIndex: 0, // 展示图片下标
@@ -66,26 +105,291 @@ export default {
       isCollected: false, // 是否收藏
     };
   },
-  components: { PicZoom},
+  components: { PicZoom },
   computed: {
   },
   methods: {
   },
   mounted() {
+    console.log(this.detail)
     // document.title = this.skuDetail.goodsName;
   },
 };
 </script>
 
 <style scoped lang="scss">
+#basic-info {
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    color: #282828;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    position: relative;
+    margin: 0;
+    width: 829px;
+    background-color: #fff;
+    margin-right: 0;
+    min-height: 187px;
+    border: 1px solid #f0f0f0;
+    -webkit-box-shadow: none;
+    padding: 18px 20px 50px;
+    height: initial;
+}
+
+#basic-info > h1 {
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 22px;
+    line-height: 33px;
+    margin-top: -7.5px;
+    color: #333;
+    font-weight: 700;
+}
+
+#basic-info > div.brief-info {
+      --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #ebebeb;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+#basic-info > div.expand-info.address {
+      --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: 'PingFangSC-Regular-address';
+    font-size: 14px;
+    margin-top: 7px;
+    height: 28px;
+    line-height: 28px;
+    color: #666;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+#basic-info > p {
+      --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 14px;
+    margin-top: 6px;
+    color: #666;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+#basic-info > div.action {
+      --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    color: #282828;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    height: 36px;
+    left: 20px;
+}
+
+#tuiguangAd-wrapper {
+      --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    color: #282828;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    height: 36px;
+    left: 20px;
+}
+
+#basic-info > div.action > a {
+      --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    text-decoration: none;
+    cursor: pointer;
+    float: left;
+    color: #fff;
+    width: 120px;
+    height: 34px;
+    line-height: 34px;
+    background: #FF794D;
+    border-radius: 1px;
+    padding: 0;
+    font-size: 0;
+    text-align: center;
+    margin-right: 8px;
+}
+
+#basic-info > div.brief-info > div {
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    font-size: 14px;
+    color: #ebebeb;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+div.brief-info.item{
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    font-size: 14px;
+    outline: 0;
+    padding: 0;
+    border: 0;
+    margin: 0 10px;
+    vertical-align: middle;
+    color: #666;
+    margin-right: 0;
+}
+
+#basic-info > div.action > a {
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    text-decoration: none;
+    cursor: pointer;
+    float: left;
+    color: #fff;
+    width: 120px;
+    height: 34px;
+    line-height: 34px;
+    background: #FF794D;
+    border-radius: 1px;
+    padding: 0;
+    font-size: 0;
+    text-align: center;
+    margin-right: 8px;
+}
+
+#basic-info > div.action > a > i {
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    color: #fff;
+    line-height: 34px;
+    font-size: 0;
+    text-align: center;
+    outline: 0;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAjVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8DizOFAAAALnRSTlMAifn9SvQH7NmrfkMwHwvLuZFmWBT24NLGuF1OPjQZEAPxwbSke268m5qLclM6+4uWvAAAAM1JREFUOMu10dkOgjAQheFhabGgoiKKC4r7ft7/8SwlcYlDiSaeq0m+/27oX+tuVydp8wOAjaz3NcJI6MLiRHOBieQ9K70qCsaXGUTbXBEwYzyGcgNThPByzh3yTbED9h8+HGsnU1jcFALegPdqivNF6+FOs0+/9s6bJ58+enG3ya+cq6czD3AA17c4xd5RF5X7jA+9jPqatKec0xQhlYVCGhG3LW5UFhC8U7AqSEZnV8x5zxFfJila/TbxS4BADTpUO5nkBf2+HqzrNQZ3lu0fMOGbbw4AAAAASUVORK5CYII=) no-repeat;
+    background-size: contain;
+    padding-right: 3px;
+    margin-right: 0;
+}
+
+#dpReviewBtn {
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font: 12px/1.5 PingFangSC-Regular,'Hiragino Sans GB',Helvetica;
+    -webkit-font-smoothing: auto;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    color: #fff;
+    line-height: 34px;
+    text-align: center;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+#basic-info .brief-info .item {
+  margin: 0 10px;
+  color: #666;
+}
 /******************商品图片及购买详情开始******************/
 .item-detail-see {
   width: 175px;
   margin-left: 30px;
 }
+
 .flex {
   display: flex;
 }
+
 .inventory {
   padding-left: 4px;
 }
@@ -98,6 +402,7 @@ export default {
   text-align: center;
   width: 100px;
 }
+
 .item-price-num {
   font-size: 16px;
   color: #666;
@@ -126,10 +431,12 @@ export default {
 
 
 }
-#dplayer{
-    width: 100%;
-    height: 100%;
-  }
+
+#dplayer {
+  width: 100%;
+  height: 100%;
+}
+
 .item-detail-big-img img {
   width: 100%;
 }
@@ -210,6 +517,7 @@ export default {
   font-size: 20px;
   cursor: pointer;
 }
+
 .item-price-old {
   color: gray;
   text-decoration: line-through;
@@ -252,6 +560,7 @@ export default {
     padding: 3px;
   }
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -260,6 +569,7 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
 }
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
@@ -277,6 +587,7 @@ export default {
     padding: 3px;
   }
 }
+
 .item-promotion {
   margin-right: 5px;
   padding: 3px;
@@ -372,7 +683,8 @@ export default {
   display: flex;
   align-items: center;
   margin-top: 15px;
-  > * {
+
+  >* {
     margin: 0 4px;
   }
 }
@@ -380,21 +692,26 @@ export default {
 .goodsConfig {
   display: flex;
   justify-content: space-between;
-  > span {
+
+  >span {
     padding-right: 10px;
+
     &:hover {
       cursor: pointer;
       color: $theme_color;
     }
   }
 }
+
 .sell-point {
   font-size: 12px;
   color: red;
   margin-bottom: 5px;
 }
-.view-video{
+
+.view-video {
   cursor: pointer;
 }
+
 /******************商品图片及购买详情结束******************/
 </style>
