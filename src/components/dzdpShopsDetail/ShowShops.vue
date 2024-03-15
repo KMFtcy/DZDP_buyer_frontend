@@ -33,12 +33,21 @@
       </div>
       <div class="store-image">
         <img :src="detail.storeImages[0].url">
+        <!-- <carousel adjustableHeight="true" autoplay="true">
+          <slide>
+            <img :src="detail.storeImages[0].url">
+          </slide>
+          <slide>
+            <img :src="detail.storeImages[0].url">
+          </slide>
+        </carousel> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Carousel, Slide } from 'vue-carousel';
 import PicZoom from "vue-piczoom"; // 图片放大
 import DPlayer from "dplayer";
 import {
@@ -95,16 +104,12 @@ export default {
       loading: false, // 立即购买loading
       loading1: false, // 加入购物车loading
       isCollected: false, // 是否收藏
-      images: {
-          'normal_size':  // required
-          [
-            {'id':'unique id', 'url': 'image url'},
-            {'id':'unique id', 'url': 'image url'}
-          ]
-        }
     };
   },
-  components: { PicZoom },
+  components: {
+    Carousel,
+    Slide
+  },
   computed: {
   },
   methods: {
