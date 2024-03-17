@@ -25,3 +25,11 @@ export function getShopsDetail (params) {
     params
   })
 }
+
+export function getShopsComments (params) {
+  return request({
+    url: `/dzdp/storeComment/getPage`,
+    method: Method.GET,
+    params
+  })
+}

@@ -1,12 +1,53 @@
 <template>
   <div class="wrapper">
     <div class="item-detail-show">
-   
+      <div id="basic-info" class="basic-info default nug_shop_ab_pv-a"> <s class="cover J_cover"></s>
+        <h1 class="shop-name"> {{ detail.storeName }} </h1>
+        <div class="brief-info">
+          <div class="star-wrapper">
+            <Rate disabled :value="Number(detail.descriptionScore)" allow-half class="remarks-star"></Rate>
+            <div class="mid-score score-40">{{ detail.descriptionScore }}</div>
+          </div> <span id="reviewCount" class="item">{{detail.commentNum}}条评价</span>
+            <span id="comment_score">
+              <span class="item">描述评分：{{ detail.descriptionScore }}</span>
+              <span class="item">物流评分：{{ detail.deliveryScore }}</span>
+              <span class="item">服务评分：{{ detail.serviceScore }}</span>
+            </span>
+          </div>
+        <div class="expand-info address" itemprop="street-address">
+          <span class="info-name">地址：</span>
+          <div id="J_map-show" class="map_address">
+            <span class="item" itemprop="street-address" id="address"> {{ detail.storeAddressDetail }} </span>
+            <div class="addressIcon"></div>
+          </div>
+        </div>
+        <p class="expand-info tel"> <span class="info-name">电话：</span> {{ detail.phone }} </p>
+        <p class="expand-info tel"> <span class="info-name">营业时间：</span> {{ detail.businessHour }} </p>
+        <div class="action">
+          <a class="write left-action" href="//www.dianping.com/shop/k7oNYLP4CBg2Wi2E/review"
+            target="_blank" rel="nofollow" data-click-name="写评价">
+            <i class="icon"></i>
+            <span id="dpReviewBtn">写评价</span>
+          </a>
+        </div>
+      </div>
+      <div class="store-image">
+        <img :src="detail.storeImages[0].url">
+        <!-- <carousel adjustableHeight="true" autoplay="true">
+          <slide>
+            <img :src="detail.storeImages[0].url">
+          </slide>
+          <slide>
+            <img :src="detail.storeImages[0].url">
+          </slide>
+        </carousel> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Carousel, Slide } from 'vue-carousel';
 import PicZoom from "vue-piczoom"; // 图片放大
 import DPlayer from "dplayer";
 import {
@@ -29,7 +70,6 @@ export default {
   watch: {
     detail: {
       handler(val) {
-        console.log(val)
         this.skuDetail = val.data;
         this.wholesaleList = val.wholesaleList;
         if (this.wholesaleList && this.wholesaleList.length > 0) {
@@ -43,8 +83,8 @@ export default {
   },
   data() {
     return {
-      showGoodsVideo:false,
-      goodsVideo:"",
+      showGoodsVideo: false,
+      goodsVideo: "",
       wholesaleList: [],
       count: 1, // 商品数量
       imgIndex: 0, // 展示图片下标
@@ -66,7 +106,10 @@ export default {
       isCollected: false, // 是否收藏
     };
   },
-  components: { PicZoom},
+  components: {
+    Carousel,
+    Slide
+  },
   computed: {
   },
   methods: {
@@ -78,14 +121,234 @@ export default {
 </script>
 
 <style scoped lang="scss">
+#basic-info {
+  --rem: 16;
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  color: #282828;
+  font: 12px/1.5 PingFangSC-Regular, 'Hiragino Sans GB', Helvetica;
+  -webkit-font-smoothing: auto;
+  outline: 0;
+  position: relative;
+  margin: 0;
+  width: 700px;
+  background-color: #fff;
+  margin-right: 0;
+  min-height: 187px;
+  border: 1px solid #f0f0f0;
+  padding: 18px 20px 50px;
+  height: initial;
+}
+
+.store-image{
+  position: relative;
+  width: 300px;
+  min-height: 187px;
+  background-color: #fff;
+  margin-left: 10px;
+  border: 1px solid #f0f0f0;
+}
+
+.store-image img{
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+}
+
+#basic-info>h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 22px;
+  line-height: 33px;
+  margin-top: -7.5px;
+  color: #333;
+  font-weight: 700;
+}
+
+#basic-info>div.brief-info {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #ebebeb;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+#basic-info>div.expand-info.address {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: 'PingFangSC-Regular-address';
+  font-size: 14px;
+  margin-top: 7px;
+  height: 28px;
+  line-height: 28px;
+  color: #666;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+#basic-info>p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 14px;
+  margin-top: 6px;
+  color: #666;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+#basic-info>div.action {
+  outline: 0;
+  margin: -8px 0;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  height: 36px;
+  left: 20px;
+}
+
+#basic-info>div.action>a {
+  margin: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+  float: left;
+  color: #fff;
+  width: 120px;
+  height: 34px;
+  line-height: 34px;
+  background: #FF794D;
+  border-radius: 1px;
+  padding: 0;
+  font-size: 0;
+  text-align: center;
+  margin-right: 8px;
+}
+
+#basic-info>div.brief-info>div {
+  --rem: 16;
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  font: 12px/1.5 PingFangSC-Regular, 'Hiragino Sans GB', Helvetica;
+  -webkit-font-smoothing: auto;
+  font-size: 14px;
+  color: #ebebeb;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+div.brief-info.item {
+  font-size: 14px;
+  outline: 0;
+  padding: 0;
+  border: 0;
+  margin: 0 10px;
+  vertical-align: middle;
+  color: #666;
+  margin-right: 0;
+}
+
+#basic-info>div.action>a {
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+  float: left;
+  color: #fff;
+  width: 120px;
+  height: 34px;
+  line-height: 34px;
+  background: #FF794D;
+  border-radius: 1px;
+  padding: 0;
+  font-size: 0;
+  text-align: center;
+  margin-right: 8px;
+}
+
+#basic-info>div.action>a>i {
+  cursor: pointer;
+  color: #fff;
+  line-height: 34px;
+  font-size: 0;
+  text-align: center;
+  outline: 0;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAjVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8DizOFAAAALnRSTlMAifn9SvQH7NmrfkMwHwvLuZFmWBT24NLGuF1OPjQZEAPxwbSke268m5qLclM6+4uWvAAAAM1JREFUOMu10dkOgjAQheFhabGgoiKKC4r7ft7/8SwlcYlDiSaeq0m+/27oX+tuVydp8wOAjaz3NcJI6MLiRHOBieQ9K70qCsaXGUTbXBEwYzyGcgNThPByzh3yTbED9h8+HGsnU1jcFALegPdqivNF6+FOs0+/9s6bJ58+enG3ya+cq6czD3AA17c4xd5RF5X7jA+9jPqatKec0xQhlYVCGhG3LW5UFhC8U7AqSEZnV8x5zxFfJila/TbxS4BADTpUO5nkBf2+HqzrNQZ3lu0fMOGbbw4AAAAASUVORK5CYII=) no-repeat;
+  background-size: contain;
+  padding-right: 3px;
+  margin-right: 0;
+}
+
+#dpReviewBtn {
+
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  color: #fff;
+  line-height: 34px;
+  text-align: center;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
+}
+
+#basic-info .brief-info .item {
+  margin: 0 10px;
+  color: #666;
+}
+
+.info .info-indent {
+ 
+  font-size: 12px;
+  color: #666;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  position: relative;
+  padding-left: 70px;
+  margin-top: 10px;
+}
+
 /******************商品图片及购买详情开始******************/
 .item-detail-see {
   width: 175px;
   margin-left: 30px;
 }
+
 .flex {
   display: flex;
 }
+
 .inventory {
   padding-left: 4px;
 }
@@ -98,6 +361,7 @@ export default {
   text-align: center;
   width: 100px;
 }
+
 .item-price-num {
   font-size: 16px;
   color: #666;
@@ -126,10 +390,12 @@ export default {
 
 
 }
-#dplayer{
-    width: 100%;
-    height: 100%;
-  }
+
+#dplayer {
+  width: 100%;
+  height: 100%;
+}
+
 .item-detail-big-img img {
   width: 100%;
 }
@@ -210,6 +476,7 @@ export default {
   font-size: 20px;
   cursor: pointer;
 }
+
 .item-price-old {
   color: gray;
   text-decoration: line-through;
@@ -252,6 +519,7 @@ export default {
     padding: 3px;
   }
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -260,6 +528,7 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
 }
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
@@ -277,6 +546,7 @@ export default {
     padding: 3px;
   }
 }
+
 .item-promotion {
   margin-right: 5px;
   padding: 3px;
@@ -372,7 +642,8 @@ export default {
   display: flex;
   align-items: center;
   margin-top: 15px;
-  > * {
+
+  >* {
     margin: 0 4px;
   }
 }
@@ -380,21 +651,26 @@ export default {
 .goodsConfig {
   display: flex;
   justify-content: space-between;
-  > span {
+
+  >span {
     padding-right: 10px;
+
     &:hover {
       cursor: pointer;
       color: $theme_color;
     }
   }
 }
+
 .sell-point {
   font-size: 12px;
   color: red;
   margin-bottom: 5px;
 }
-.view-video{
+
+.view-video {
   cursor: pointer;
 }
+
 /******************商品图片及购买详情结束******************/
 </style>
