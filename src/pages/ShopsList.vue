@@ -53,56 +53,54 @@
               <div class="goods-show-img">
                 <img width="220" height="220" :src="item.thumbnail" />
               </div>
-              <div class="goods-show-price">
-                <span>
-                  <span class="seckill-price text-danger">{{
-                    item.price | unitPrice("￥")
-                  }}</span>
-                </span>
-              </div>
-              <div class="goods-show-detail">
-                <Tag
-                  v-if="item.salesModel === 'WHOLESALE'"
-                  class="goods-show-tag"
-                  color="purple"
-                >
-                  批发
-                </Tag>
-                <span>{{ item.goodsName }}</span>
-              </div>
-              <div class="goods-show-num">
-                已有<span>{{ item.commentNum || 0 }}</span
-                >人评价
-              </div>
-              <div class="goods-show-seller">
-                <span class="text-bottom" style="color: #e4393c">{{
-                  item.storeName
-                }}</span>
+              <div class="goods-show-title-wrap">
+                <p class="goods-show-title">{{ item.storeName }}</p>
+                <div class="goods-show-row">
+                  <div class="goods-show-price">
+                    <span>
+                      <span class="seckill-price text-danger">{{
+                        item.price | unitPrice("￥")
+                      }}</span>
+                    </span>
+                  </div>
+                  <div class="goods-show-detail">
+                    <Tag
+                      v-if="item.salesModel === 'WHOLESALE'"
+                      class="goods-show-tag"
+                      color="purple"
+                    >
+                      批发
+                    </Tag>
+                    <span>{{ item.goodsName }}</span>
+                  </div>
+                  <div class="goods-show-num">
+                    已有<span>{{ item.commentNum || 0 }}</span
+                    >人评价
+                  </div>
+                  <div class="goods-show-right">
+                    <Tag
+                      class="goods-show-tag"
+                      color="red"
+                      v-if="item.selfOperated"
+                    >自营</Tag>
+                    <Tag
+                      class="goods-show-tag"
+                      color="blue"
+                      v-if="item.goodsType === 'VIRTUAL_GOODS'"
+                    >
+                      虚拟
+                    </Tag>
+                    <Tag
+                      class="goods-show-tag"
+                      color="blue"
+                      v-else-if="item.goodsType === 'PHYSICAL_GOODS'"
+                    >
+                      实物
+                    </Tag>
+                  </div>
+                </div>
               </div>
 
-              <div class="goods-show-right">
-                <Tag
-                  class="goods-show-tag"
-                  color="red"
-                  v-if="item.selfOperated"
-                >
-                  自营
-                </Tag>
-                <Tag
-                  class="goods-show-tag"
-                  color="blue"
-                  v-if="item.goodsType === 'VIRTUAL_GOODS'"
-                >
-                  虚拟
-                </Tag>
-                <Tag
-                  class="goods-show-tag"
-                  color="blue"
-                  v-else-if="item.goodsType === 'PHYSICAL_GOODS'"
-                >
-                  实物
-                </Tag>
-              </div>
             </div>
           </div>
         </div>
@@ -265,6 +263,44 @@ export default {
 .cate-nav{
   margin-top: 10px;
 }
+
+// 商品项样式调整
+.goods-show-info {
+  display: flex;
+  // flex: 1;
+  width: 100%;
+  flex: auto;
+  flex-direction: row; // 更改为横向布局
+  align-items: center; // 居中对齐子元素
+  // margin-bottom: 20px; // 增加商品项之间的间距
+  margin: 25px auto 15px auto;
+  // width: 1184px;
+}
+
+.goods-show-img {
+  // 如果需要，调整图片容器的样式
+  flex-shrink: 0; // 防止图片缩放
+  width: 220px; // 图片宽度，根据需要调整
+  height: 220px; // 图片高度，根据需要调整
+  margin-right: 20px; // 在图片和详情之间增加右边距
+}
+
+.goods-show-seller {
+  font-size: 16px; // 商品名称字体大小
+  margin-bottom: 10px; // 商品名称与下面内容的间距
+}
+
+.goods-show-num,
+.goods-show-tag {
+  font-size: 14px; // 这两个详情的字体稍小
+  margin-bottom: 5px; // 和下面内容的间距
+}
+
+.goods-show-num {
+  margin-bottom: 0;
+  padding: 0 10px;
+}
+
 .goods-show-info > .goods-show-seller > .goods-show-buyer {
   width: 35px;
   height: 17px;
@@ -277,9 +313,9 @@ export default {
 }
 
 .goods-show-tag {
-  height: 18px;
-  width: 32px;
-  line-height: 14px;
+  // height: 18px;
+  // width: 32px;
+  // line-height: 14px;
   white-space: nowrap;
   text-align: center;
   align-items: center;
@@ -290,27 +326,48 @@ export default {
   // padding:3px 0;
   vertical-align: middle;
 }
+
 .container {
+  width: 90%;
   margin:25px auto 15px auto;
-  width: 1184px;
-  min-width: 1000px;
+  // width: 1184px;
+  min-width: 400px;
   position: relative;
 }
 .price-sort:hover {
   color: #e23a3a;
 }
 .goods-box {
+  display: block;
+}
+
+.goods-show-title-wrap {
+  align-self: flex-start;
+  .goods-show-title {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1.5;
+    color: #333;
+  }
+}
+
+.goods-show-row {
   display: flex;
+  align-items: center;
+  .goods-show-price {
+    margin-top: 0 !important;
+  }
 }
 /* ---------------侧边广告栏开始------------------- */
 
 .goods-show-right {
   display: flex;
   flex-direction: row;
-  margin-top: 5px;
 }
 
-
+.goods-list {
+  width: 100%;
+}
 
 /* ---------------商品栏开始------------------- */
 .goods-list-box {
