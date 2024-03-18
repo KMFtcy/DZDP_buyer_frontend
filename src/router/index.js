@@ -100,6 +100,7 @@ const ShopEntry = (resolve) =>
  */
 const DZDPShopsList = (resolve) => require(["@/pages/ShopsList"], resolve);
 const DZDPShopsDetail = (resolve) => require(["@/pages/ShopsDetail"], resolve);
+const DZDPShopsComment = (resolve) => require(["@/pages/ShopsComment"], resolve);
 
 Vue.use(Router);
 
@@ -169,6 +170,11 @@ export default new Router({
       path: "/shopsDetail", // 店铺详情
       name: "ShopsDetail",
       component: DZDPShopsDetail,
+    },
+    {
+      path: "/shopsComment", // 店铺提交评论
+      name: "ShopsComment",
+      component: DZDPShopsComment,
     },
     {
       path: "/shoppingCart", // 头部购物车

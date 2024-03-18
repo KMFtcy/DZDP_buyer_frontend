@@ -23,12 +23,6 @@
         </div>
         <p class="expand-info tel"> <span class="info-name">电话：</span> {{ detail.phone }} </p>
         <p class="expand-info tel"> <span class="info-name">营业时间：</span> {{ detail.businessHour }} </p>
-        <div class="action" @click="goWriteComment(detail.id)">
-          <a class="write left-action" target="_blank" rel="nofollow" data-click-name="写评价">
-            <i class="icon"></i>
-            <span id="dpReviewBtn">写评价</span>
-          </a>
-        </div>
       </div>
       <div class="store-image">
         <img :src="detail.storeImages[0].url">
@@ -58,7 +52,7 @@ import {
 import { addCartGoods } from "@/api/cart.js";
 
 export default {
-  name: "ShowShops",
+  name: "ShopInfo",
   props: {
     // 商品数据
     detail: {
