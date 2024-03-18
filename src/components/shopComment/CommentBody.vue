@@ -16,13 +16,6 @@
                   <div class="rc-rate-desc ">点击星星给商户打分</div>
                 </div>
                 <div class="metric-star-item">
-                  <div class="rc-rate-name">口味<em class="rc-rate-required">*</em></div>
-                  <span>
-                    <Rate v-model="overallRate" allow-half @on-change="onChange"/>
-                  </span>
-                  <div class="rc-rate-desc ">给口味打分</div>
-                </div>
-                <div class="metric-star-item">
                   <div class="rc-rate-name">环境<em class="rc-rate-required">*</em></div>
                   <span>
                     <Rate v-model="overallRate" allow-half @on-change="onChange"/>
@@ -35,6 +28,13 @@
                     <Rate v-model="overallRate" allow-half @on-change="onChange"/>
                   </span>
                   <div class="rc-rate-desc ">给服务打分</div>
+                </div>
+                <div class="metric-star-item">
+                  <div class="rc-rate-name">师资<em class="rc-rate-required">*</em></div>
+                  <span>
+                    <Rate v-model="overallRate" allow-half @on-change="onChange"/>
+                  </span>
+                  <div class="rc-rate-desc ">给教师打分</div>
                 </div>
               </div>
               <div class="text-area-module">
