@@ -5,13 +5,13 @@
         <h1 class="shop-name"> {{ detail.storeName }} </h1>
         <div class="brief-info">
           <div class="star-wrapper">
-            <Rate disabled :value="Number(detail.descriptionScore)" allow-half class="remarks-star"></Rate>
-            <div class="mid-score score-40">{{ detail.descriptionScore }}</div>
+            <Rate disabled :value="Number(detail.starAvg)" allow-half class="remarks-star"></Rate>
+            <div class="mid-score score-40">{{ detail.starAvg }}</div>
           </div> <span id="reviewCount" class="item">{{detail.commentNum}}条评价</span>
             <span id="comment_score">
-              <span class="item">描述评分：{{ detail.descriptionScore }}</span>
-              <span class="item">物流评分：{{ detail.deliveryScore }}</span>
-              <span class="item">服务评分：{{ detail.serviceScore }}</span>
+              <span class="item">环境评分：{{ detail.environmentScoreAvg }}</span>
+              <span class="item">服务评分：{{ detail.serviceScoreAvg }}</span>
+              <span class="item">师资评分：{{ detail.varietyScoreAvg }}</span>
             </span>
           </div>
         <div class="expand-info address" itemprop="street-address">
