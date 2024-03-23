@@ -48,8 +48,8 @@
                       <img :src="item.previewImg" :style="{transform:`rotate(${item.deg}deg)`}" width="198" alt="">
                     </div>
                     <p class="remarks-sub">
-                      <span class="remarks-item">{{item.storeName}}</span>
-                      <span class="remarks-time">{{item.createdTime}}</span>
+                      <span class="remarks-item">{{item.createdTime}}</span>
+                      <!-- <span class="remarks-time">{{item.createdTime}}</span> -->
                     </p>
                   </div>
                 </div>
