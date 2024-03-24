@@ -14,27 +14,17 @@
           <!-- 排序 -->
           <div class="goods-list-tool">
             <ul>
-              <li
-                v-for="(item, index) in goodsTool"
-                :key="index"
-                @click="orderBy(item.en, index)"
-              >
-                <span :class="{ 'goods-list-tool-active': index === sortIndex }"
-                  >{{ item.title }}<Icon type="ios-arrow-round-down"
-                /></span>
+              <li v-for="(item, index) in goodsTool" :key="index" @click="orderBy(item.en, index)">
+                <span :class="{ 'goods-list-tool-active': index === sortIndex }">{{ item.title }}
+                  <Icon type="ios-arrow-round-down" />
+                </span>
               </li>
               <li @click="orderBy('price', 5, 'up')" class="price-sort">
                 <span :class="{ 'goods-list-tool-active': 5 === sortIndex }">
                   价格
                   <div>
-                    <Icon
-                      type="md-arrow-dropup"
-                      :class="{ 'price-color': sortPriceIndex == 'desc' }"
-                    />
-                    <Icon
-                      type="md-arrow-dropdown"
-                      :class="{ 'price-color': sortPriceIndex == 'asc' }"
-                    />
+                    <Icon type="md-arrow-dropup" :class="{ 'price-color': sortPriceIndex == 'desc' }" />
+                    <Icon type="md-arrow-dropdown" :class="{ 'price-color': sortPriceIndex == 'asc' }" />
                   </div>
                 </span>
               </li>
@@ -43,61 +33,51 @@
           <!-- 列表 -->
           <div class="goods-list">
             <empty v-if="shopsList.length === 0" />
-            <div
-              v-else
-              class="goods-show-info"
-              v-for="(item, index) in shopsList"
-              :key="index"
-              @click="goGoodsDetail(item.id)"
-            >
+            <div v-else class="goods-show-info" v-for="(item, index) in shopsList" :key="index"
+              @click="goGoodsDetail(item.id)">
               <div class="goods-show-img">
-                <img width="220" height="220" :src="item.thumbnail" />
+                <img width="172" height="129" :src="item.thumbnail" />
               </div>
               <div class="goods-show-title-wrap">
                 <p class="goods-show-title">{{ item.storeName }}</p>
                 <div class="goods-show-row">
-                  <div class="goods-show-price">
+                  <!-- <div class="goods-show-price">
                     <span>
                       <span class="seckill-price text-danger">{{
                         item.price | unitPrice("￥")
-                      }}</span>
+                        }}</span>
                     </span>
-                  </div>
-                  <div class="goods-show-detail">
-                    <Tag
-                      v-if="item.salesModel === 'WHOLESALE'"
-                      class="goods-show-tag"
-                      color="purple"
-                    >
+                  </div> -->
+                  <!-- <div class="goods-show-detail">
+                    <Tag v-if="item.salesModel === 'WHOLESALE'" class="goods-show-tag" color="purple">
                       批发
                     </Tag>
                     <span>{{ item.goodsName }}</span>
-                  </div>
-                  <div class="goods-show-num">
-                    已有<span>{{ item.commentNum || 0 }}</span
-                    >人评价
-                  </div>
-                  <div class="goods-show-right">
-                    <Tag
-                      class="goods-show-tag"
-                      color="red"
-                      v-if="item.selfOperated"
-                    >自营</Tag>
-                    <Tag
-                      class="goods-show-tag"
-                      color="blue"
-                      v-if="item.goodsType === 'VIRTUAL_GOODS'"
-                    >
+                  </div> -->
+                  <!-- <div class="goods-show-num">
+                    已有<span>{{ item.commentNum || 0 }}</span>人评价
+                  </div> -->
+                  <!-- <div class="goods-show-right">
+                    <Tag class="goods-show-tag" color="red" v-if="item.selfOperated">自营</Tag>
+                    <Tag class="goods-show-tag" color="blue" v-if="item.goodsType === 'VIRTUAL_GOODS'">
                       虚拟
                     </Tag>
-                    <Tag
-                      class="goods-show-tag"
-                      color="blue"
-                      v-else-if="item.goodsType === 'PHYSICAL_GOODS'"
-                    >
+                    <Tag class="goods-show-tag" color="blue" v-else-if="item.goodsType === 'PHYSICAL_GOODS'">
                       实物
                     </Tag>
+                  </div> -->
+                </div>
+                <div class="goods-show-desc">
+                  <div class="goods-show-desc-up">
+                    <Rate allow-half disabled :model-value="item.starAvg || 0" />
+                    <p><span>{{ item.commentNum || 0 }}</span>条评价 </p>
+                    <p>人均：<span>{{ item.consumptionAvg | unitPrice("￥") || 0 }}</span></p>
                   </div>
+                  <div class="goods-show-desc-middle">
+                    <p>{{ item.categoryName }}</p>
+                    <p>{{ item.storeAddressPath }}</p>
+                  </div>
+                  <!-- <div class="goods-show-desc-down">团购：xxxx</div> -->
                 </div>
               </div>
 
@@ -106,14 +86,8 @@
         </div>
       </div>
       <div class="goods-page">
-        <Page
-          show-total
-          show-sizer
-          @on-change="changePageNum"
-          @on-page-size-change="changePageSize"
-          :total="total"
-          :page-size="params.pageSize"
-        ></Page>
+        <Page show-total show-sizer @on-change="changePageNum" @on-page-size-change="changePageSize" :total="total"
+          :page-size="params.pageSize"></Page>
       </div>
     </div>
     <Spin size="large" fix v-if="loading"></Spin>
@@ -273,32 +247,39 @@ export default {
   flex-direction: row; // 更改为横向布局
   align-items: center; // 居中对齐子元素
   // margin-bottom: 20px; // 增加商品项之间的间距
-  margin: 25px auto 15px auto;
-  // width: 1184px;
+  margin: 1px auto;
+  width: 1184px;
+  height: 172px;
 }
 
 .goods-show-img {
   // 如果需要，调整图片容器的样式
   flex-shrink: 0; // 防止图片缩放
-  width: 220px; // 图片宽度，根据需要调整
-  height: 220px; // 图片高度，根据需要调整
+  width: 172px; // 图片宽度，根据需要调整
+  height: 129px; // 图片高度，根据需要调整
   margin-right: 20px; // 在图片和详情之间增加右边距
+  margin-left: 20px;
 }
 
 .goods-show-seller {
   font-size: 16px; // 商品名称字体大小
   margin-bottom: 10px; // 商品名称与下面内容的间距
+  margin-top: 20px;
 }
 
 .goods-show-num,
 .goods-show-tag {
   font-size: 14px; // 这两个详情的字体稍小
-  margin-bottom: 5px; // 和下面内容的间距
+  margin-bottom: 10px; // 和下面内容的间距
 }
 
 .goods-show-num {
   margin-bottom: 0;
-  padding: 0 10px;
+}
+
+.goods-show-title{
+    margin-top: 30px;
+    margin-bottom: 10px; // 和下面内容的间距
 }
 
 .goods-show-info > .goods-show-seller > .goods-show-buyer {
@@ -351,13 +332,45 @@ export default {
   }
 }
 
-.goods-show-row {
-  display: flex;
-  align-items: center;
-  .goods-show-price {
-    margin-top: 0 !important;
+// .goods-show-row {
+//   display: flex;
+//   align-items: center;
+//   .goods-show-price {
+//     margin-top: 0 !important;
+//   }
+// }
+
+.goods-show-desc {
+  &-up {
+    display: flex;
+    align-items: center;
+       // 这里添加新的span元素样式
+    & > p {
+      color: solid #ccc; // 仅作为示例，表示字体颜色设置为红色
+      margin-left: 10px; // 示例，表示左外边距设置为10px
+    }
+  
+    & > p {
+      padding-left: 10px;
+      border-left: 1px solid #ccc;
+    }
   }
+  &-middle {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & > p:first-of-type {
+      padding-right: 10px;
+      border-right: 1px solid #ccc;
+    }
+  }
+  // &-down {
+  //   padding-top: 10px;
+  //   border-top: 1px dashed #ccc;
+  // }
 }
+
 /* ---------------侧边广告栏开始------------------- */
 
 .goods-show-right {
