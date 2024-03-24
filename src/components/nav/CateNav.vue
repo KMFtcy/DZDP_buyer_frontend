@@ -39,17 +39,17 @@
             v-for="(item, index) in cateList"
             :key="index"
           >
-            <span class="nav-side-item" @click="goShopsList(item.categoryId)">{{
+            <span class="nav-side-item first-nav-cate" @click="goShopsList(item.categoryId)">{{
               item.name
-            }}</span>
+            }} : </span>
             <span v-for="(second, secIndex) in item.children" :key="secIndex">
-              <span v-if="secIndex < 2"> / </span>
               <span
                 @click="goShopsList(second.categoryId, item.categoryId)"
                 class="nav-side-item"
                 v-if="secIndex < 2"
                 >{{ second.name }}</span
               >
+              <span v-if="secIndex < 1"> / </span>
             </span>
           </li>
         </ul>
@@ -361,6 +361,9 @@ export default {
 .nav-side-item:hover {
   cursor: pointer;
   color: $theme_color;
+}
+.first-nav-cate{
+  font-weight: bold;
 }
 
 /*显示商品详细信息*/

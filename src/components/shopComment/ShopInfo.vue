@@ -5,13 +5,13 @@
         <h1 class="shop-name"> {{ detail.storeName }} </h1>
         <div class="brief-info">
           <div class="star-wrapper">
-            <Rate disabled :value="Number(detail.starAvg)" allow-half class="remarks-star"></Rate>
-            <div class="mid-score score-40">{{ detail.starAvg }}</div>
+            <Rate disabled :value="Number(detail.descriptionScore)" allow-half class="remarks-star"></Rate>
+            <div class="mid-score score-40">{{ detail.descriptionScore }}</div>
           </div> <span id="reviewCount" class="item">{{detail.commentNum}}条评价</span>
             <span id="comment_score">
-              <span class="item">环境评分：{{ detail.environmentScoreAvg }}</span>
-              <span class="item">服务评分：{{ detail.serviceScoreAvg }}</span>
-              <span class="item">师资评分：{{ detail.varietyScoreAvg }}</span>
+              <span class="item">描述评分：{{ detail.descriptionScore }}</span>
+              <span class="item">物流评分：{{ detail.deliveryScore }}</span>
+              <span class="item">服务评分：{{ detail.serviceScore }}</span>
             </span>
           </div>
         <div class="expand-info address" itemprop="street-address">
@@ -23,12 +23,6 @@
         </div>
         <p class="expand-info tel"> <span class="info-name">电话：</span> {{ detail.phone }} </p>
         <p class="expand-info tel"> <span class="info-name">营业时间：</span> {{ detail.businessHour }} </p>
-        <div class="action" @click="goWriteComment(detail.id)">
-          <a class="write left-action" target="_blank" rel="nofollow" data-click-name="写评价">
-            <i class="icon"></i>
-            <span id="dpReviewBtn">写评价</span>
-          </a>
-        </div>
       </div>
       <div class="store-image">
         <img :src="detail.storeImages[0].url">
@@ -58,7 +52,7 @@ import {
 import { addCartGoods } from "@/api/cart.js";
 
 export default {
-  name: "ShowShops",
+  name: "ShopInfo",
   props: {
     // 商品数据
     detail: {
