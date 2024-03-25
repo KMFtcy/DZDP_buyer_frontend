@@ -11,28 +11,28 @@
                 <div class="metric-star-item">
                   <div class="rc-rate-name">总体评价<em class="rc-rate-required">*</em></div>
                   <span>
-                    <Rate v-model="overallRate" allow-half @on-change="onChange"/>
+                    <Rate v-model="overallRate" allow-half @on-change="overallRateChange"/>
                   </span>
                   <div class="rc-rate-desc ">点击星星给商户打分</div>
                 </div>
                 <div class="metric-star-item">
                   <div class="rc-rate-name">环境<em class="rc-rate-required">*</em></div>
                   <span>
-                    <Rate v-model="overallRate" allow-half @on-change="onChange"/>
+                    <Rate v-model="envRate" allow-half @on-change="onChange"/>
                   </span>
                   <div class="rc-rate-desc ">给环境打分</div>
                 </div>
                 <div class="metric-star-item">
                   <div class="rc-rate-name">服务<em class="rc-rate-required">*</em></div>
                   <span>
-                    <Rate v-model="overallRate" allow-half @on-change="onChange"/>
+                    <Rate v-model="serviceRate" allow-half @on-change="onChange"/>
                   </span>
                   <div class="rc-rate-desc ">给服务打分</div>
                 </div>
                 <div class="metric-star-item">
                   <div class="rc-rate-name">师资<em class="rc-rate-required">*</em></div>
                   <span>
-                    <Rate v-model="overallRate" allow-half @on-change="onChange"/>
+                    <Rate v-model="cateRate" allow-half @on-change="onChange"/>
                   </span>
                   <div class="rc-rate-desc ">给教师打分</div>
                 </div>
@@ -120,6 +120,9 @@ export default {
       commentTotal: 0, // 评论总数
       onceFlag: true, // 只调用一次
       overallRate: 0,
+      envRate: 0,
+      serviceRate: 0,
+      cateRate: 0,
       tips: ['不满意', '糟糕', '一般', '优秀', '非常满意'],
     };
   },
@@ -185,6 +188,11 @@ export default {
     },
     onChange(value) {
       console.log('你打了'+value+'分');
+    },
+    overallRateChange(value) {
+      this.envRate = value;
+      this.serviceRate = value;
+      this.cateRate = value;
     },
   },
   mounted() {
