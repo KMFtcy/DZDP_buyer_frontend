@@ -33,3 +33,12 @@ export function getShopsComments (params) {
     params
   })
 }
+
+export function postShopsComments (params) {
+  return request({
+    url: `/dzdp/storeComment/insert`,
+    method: Method.POST,
+    needToken: true,
+    data: params
+  })
+}

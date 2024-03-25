@@ -64,7 +64,7 @@
         />
       </FormItem>
 
-      <h4>营业执照信息</h4>
+      <!-- <h4>营业执照信息</h4>
       <FormItem prop="licenseNum" label="营业执照号">
         <Input
           type="text"
@@ -174,7 +174,7 @@
             ></Icon>
           </div>
         </div>
-      </FormItem>
+      </FormItem> -->
       <FormItem>
         <Button type="primary" :loading="loading" @click="next"
           >填写财务资质信息</Button
@@ -272,24 +272,25 @@ export default {
 
     // 下一步
     next () {
-      this.$refs.firstForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          let params = JSON.parse(JSON.stringify(this.form));
-          params.legalPhoto = this.form.legalPhoto.toString();
-          params.licencePhoto = this.form.licencePhoto.toString();
-          applyFirst(params)
-            .then((res) => {
-              this.loading = false;
-              if (res.success) this.$emit('change', 1);
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log('error');
-        }
-      });
+      // this.$refs.firstForm.validate((valid) => {
+      //   if (valid) {
+      //     this.loading = true;
+      //     let params = JSON.parse(JSON.stringify(this.form));
+      //     params.legalPhoto = this.form.legalPhoto.toString();
+      //     params.licencePhoto = this.form.licencePhoto.toString();
+      //     applyFirst(params)
+      //       .then((res) => {
+      //         this.loading = false;
+      //         if (res.success) this.$emit('change', 1);
+      //       })
+      //       .catch(() => {
+      //         this.loading = false;
+      //       });
+      //   } else {
+      //     console.log('error');
+      //   }
+      // });
+      this.$emit('change', 1);
     },
 
     // 上传之前

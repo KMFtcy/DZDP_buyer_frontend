@@ -40,7 +40,7 @@
               <div class="text-area-module">
                 <div class="module-title-text">评价<em class="required">*</em></div>
                 <div>
-                  <div class="comment-body"><textarea class="comment-text-area" placeholder="亲，菜品的口味如何，环境怎么样，服务满意吗？"
+                  <div class="comment-body"><textarea class="comment-text-area" placeholder="亲，菜品的口味如何，环境怎么样，服务满意吗？" v-model="commentText"
                       style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 190px;"></textarea>
                   </div>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="btn-block-wrapper">
                   <div class="btn-wrapper">
                   <!-- <button class="btn btn-1 btn-save"><span>保存草稿</span></button> -->
-                  <button class="btn btn-2"><span>发表评价</span></button></div>
+                  <button class="btn btn-2" @click="comment()"><span>发表评价</span></button></div>
                   <!-- <div class="save-auto-hide">评价已经在 自动保存</div> -->
                 </div>
                 <!-- <div class="save-success-hide">保存成功，此草稿仅可在PC端使用</div> -->
@@ -90,6 +90,7 @@
 <script>
 import { goodsComment, goodsCommentNum } from '@/api/member.js';
 import { getShopsComments } from '../../api/dzdpShop';
+import { postShopsComments } from '../../api/dzdpShop';
 export default {
   name: 'CommentBody',
   props: {
@@ -123,6 +124,7 @@ export default {
       envRate: 0,
       serviceRate: 0,
       cateRate: 0,
+      commentText: "",
       tips: ['不满意', '糟糕', '一般', '优秀', '非常满意'],
     };
   },
@@ -194,6 +196,30 @@ export default {
       this.serviceRate = value;
       this.cateRate = value;
     },
+    comment(){
+      console.log("评论")
+      const postParams = {
+        comment: this.commentText,
+        // consumption: "",
+        environmentScore: this.envRate,
+        // images: [],
+        serviceScore: this.serviceRate,
+        starNum: this.overallRate,
+        storeId: this.shopDetail.id,
+        varietyScore: this.cateRate
+      };
+      postShopsComments(postParams)
+        .then((res) => {
+          if (res.success) {
+            alert("success")
+          } else {
+            this.$Message.warning(res.message);
+          }
+        })
+        .catch(() => {
+            this.$Message.error(res.message);
+        });
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
