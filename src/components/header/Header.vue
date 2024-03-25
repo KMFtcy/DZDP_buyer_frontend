@@ -31,16 +31,16 @@
             <transition name='fade'>
               <ul class="drop-items">
                 <li @click="goUserCenter('/home')">我的主页</li>
-                <li @click="goUserCenter('/home/Coupons')">优惠券</li>
-                <li @click="goUserCenter('/home/Favorites')">我的收藏</li>
+                <!-- <li @click="goUserCenter('/home/Coupons')">优惠券</li>
+                <li @click="goUserCenter('/home/Favorites')">我的收藏</li> -->
                 <li @click="signOutFun">退出登录</li>
               </ul>
             </transition>
           </div>
         </li>
         <li @click="goUserCenter('/home/MyOrder')"><span class="nav-item">我的订单</span></li>
-        <li @click="goUserCenter('/home/MyTracks')"><span class="nav-item">我的足迹</span></li>
-        <li @click="goUserCenter('/home/MsgList')"><span class="nav-item">我的消息</span></li>
+        <!-- <li @click="goUserCenter('/home/MyTracks')"><span class="nav-item">我的足迹</span></li> -->
+        <!-- <li @click="goUserCenter('/home/MsgList')"><span class="nav-item">我的消息</span></li> -->
         <li v-if="$route.name !== 'Cart'" style="position:relative;">
           <Dropdown placement="bottom-start">
             <DropdownMenu slot="list">
@@ -315,7 +315,7 @@ export default {
     margin: 0 auto;
     padding: 5px 10px;
     z-index: 20;
-    height: 150px;
+    // height: 150px;
     background-color: #fff;
     width: 80px;
     border: 1px solid #eee;

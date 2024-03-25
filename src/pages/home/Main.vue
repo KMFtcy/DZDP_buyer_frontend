@@ -5,10 +5,10 @@
         <!-- 我的订单组件 -->
         <myOrderPage :homePage="true" />
       </div>
-      <div class="box">
-        <!-- 近期收藏 -->
+      <!-- 近期收藏 -->
+      <!-- <div class="box">
         <myFavorites :homePage="true" />
-      </div>
+      </div> -->
       <div class="box">
       </div>
     </div>

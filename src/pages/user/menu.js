@@ -166,6 +166,7 @@ const user = [{
 // ]
 // wholesale[0], shop[0]
 let menuList = []
-menuList.push(order[0], member[0], user[0])
+menuList.push(order[0])
+// menuList.push(order[0], member[0], user[0])
 
 export default menuList
