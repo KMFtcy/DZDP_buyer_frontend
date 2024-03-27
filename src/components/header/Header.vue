@@ -159,11 +159,11 @@ export default {
     shopEntry() {
       // 店铺入驻
       if (storage.getItem('accessToken')) {
-        let routeUrl = this.$router.resolve({
+        let routeUrl = {
           path: '/shopEntry',
           query: {id: 1}
-        });
-        window.open(routeUrl.href, '_blank');
+        };
+        this.$router.push(routeUrl);
       } else {
         this.$router.push('login');
       }
