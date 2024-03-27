@@ -126,7 +126,6 @@ export default {
   },
   data() {
     return {
-      ossEndpoint: "",
       commentList: [], // 评论列表
       commentParams: { // 评论传参
         pageNumber: 1,
@@ -143,25 +142,11 @@ export default {
       cateRate: 0,
       commentText: "",
       tips: ['不满意', '糟糕', '一般', '优秀', '非常满意'],
+      ossEndpoint: "",
       ossSTSObj: {},
-      defaultList: [
-        {
-          'name': 'image-demo-1.jpg',
-          'url': 'https://file.iviewui.com/images/image-demo-1.jpg'
-        },
-        {
-          'name': 'image-demo-2.jpg',
-          'url': 'https://file.iviewui.com/images/image-demo-2.jpg'
-        }
-      ],
       imgName: '',
       visible: false,
-      uploadList: [
-        {
-          'status': "finished",
-          'url': 'https://file.iviewui.com/images/image-demo-1.jpg',
-        }
-      ],
+      uploadList: [],
     };
   },
   computed: {
