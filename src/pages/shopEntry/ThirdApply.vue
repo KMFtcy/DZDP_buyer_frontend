@@ -3,61 +3,39 @@
     <Form ref="thirdForm" :model="form" :rules="rules" :label-width="140">
       <h4>基础信息</h4>
       <FormItem prop="storeName" label="店铺名称">
-        <Input
-          type="text"
-          v-model="form.storeName"
-          placeholder="请填写店铺名称"
-        />
+        <Input type="text" v-model="form.storeName" placeholder="请填写店铺名称" />
       </FormItem>
 
       <FormItem prop="storeLogo" label="店铺logo">
-        <Upload
-          ref="uploadLogo"
-          :show-upload-list="false"
-          :on-success="handleSuccess"
-          :format="['jpg', 'jpeg', 'png', 'gif']"
-          :max-size="2048"
-          :before-upload="beforeUpload"
-          :on-format-error="handleFormatError"
-          :on-exceeded-size="handleMaxSize"
-          :on-error="uploadErr"
-          multiple
-          :action="action"
-          :headers="accessToken"
-        >
-          <Button type="info" :loading="uploadLoading">上传logo</Button>
-        </Upload>
-        <div class="describe">请压缩图片在2M以内，格式为gif，jpg，png</div>
-        <div
-          class="img-list"
-          v-for="(item, index) in form.storeLogo"
-          :key="index"
-        >
-          <img :src="item" width="100" height="" alt="" />
-          <div class="cover">
-            <Icon
-              type="ios-eye-outline"
-              @click.native="handleView(item)"
-            ></Icon>
-            <Icon
-              type="ios-trash-outline"
-              @click.native="handleRemove(index, 'storeLogo')"
-            ></Icon>
+        <div class="upload-image-module">
+          <div class="upload-wrapper">
+            <div class="demo-upload-list" v-for="item in uploadList">
+              <template v-if="item.status === 'finished'">
+                <img :src="item.url" width="100%" height="100%" />
+                <div class="demo-upload-list-cover">
+                  <Icon type="ios-eye-outline" @click="handleView(item.url)"></Icon>
+                  <Icon type="ios-trash-outline" @click="handleRemove(item)"></Icon>
+                </div>
+              </template>
+              <template v-else>
+                <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+              </template>
+            </div>
+            <Upload :action="ossEndpoint" :data="ossSTSObj" ref="upload" :show-upload-list="false"
+              :on-success="handleSuccess" :format="['jpg', 'jpeg', 'png']" :max-size="10240"
+              :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload"
+              type="drag" style="display: inline-block;width:58px;">
+              <div style="width: 58px;height:58px;line-height: 58px;">
+                <Icon type="ios-camera" size="20"></Icon>
+              </div>
+            </Upload>
+            <div class="upload-desc">单张图片不超过10MB，尺寸不小于300*300px，支持jpg、png和bmp格式</div>
           </div>
         </div>
       </FormItem>
       <FormItem prop="goodsManagementCategory" label="店铺经营类目">
-        <Select
-          v-model="form.goodsManagementCategory"
-          multiple
-          style="width: 300px"
-        >
-          <Option
-            v-for="item in categoryList"
-            :value="item.id"
-            :key="item.id"
-            >{{ item.name }}</Option
-          >
+        <Select v-model="form.goodsManagementCategory" multiple style="width: 300px">
+          <Option v-for="item in categoryList" :value="item.id" :key="item.id">{{ item.name }}</Option>
         </Select>
       </FormItem>
 
@@ -66,28 +44,16 @@
         <Button type="default" style="margin-left: 10px;" @click="$refs.map.open()">选择</Button>
       </FormItem>
       <FormItem prop="storeAddressDetail" label="店铺详细地址">
-        <Input
-          type="text"
-          v-model="form.storeAddressDetail"
-          placeholder="请填写店铺详细地址"
-        />
+        <Input type="text" v-model="form.storeAddressDetail" placeholder="请填写店铺详细地址" />
       </FormItem>
       <FormItem prop="storeDesc" label="店铺简介">
-        <Input
-          type="textarea"
-          v-model="form.storeDesc"
-          maxlength="200"
-          show-word-limit
-          :rows="4"
-          placeholder="请输入店铺简介"
-        />
+        <Input type="textarea" v-model="form.storeDesc" maxlength="200" show-word-limit :rows="4"
+          placeholder="请输入店铺简介" />
       </FormItem>
 
       <FormItem>
         <Button @click="$emit('change', 1)">返回</Button>
-        <Button type="primary" :loading="loading" @click="next"
-          >提交平台审核</Button
-        >
+        <Button type="primary" :loading="loading" @click="next">提交平台审核</Button>
       </FormItem>
     </Form>
     <Modal title="View Image" v-model="visible">
@@ -105,6 +71,8 @@ import { commonUrl } from '@/plugins/request.js';
 
 
 import multipleMap from "@/components/map/multiple-map";
+import { obtainOSSToken } from '../../api/dzdpShop';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default {
@@ -115,7 +83,7 @@ export default {
     }
   },
   components: { multipleMap },
-  data () {
+  data() {
     return {
       loading: false, // 加载状态
       uploadLoading: false, // 上传加载状态
@@ -138,12 +106,17 @@ export default {
         storeAddressIdPath: [{ required: true, message: '请选择店铺位置' }],
         storeAddressDetail: [{ required: true, message: '请输入店铺详细地址' }]
       },
-      categoryList: [] // 分类数据
+      categoryList: [], // 分类数据
+      ossEndpoint: "",
+      ossSTSObj: {},
+      imgName: '',
+      visible: false,
+      uploadList: [],
     };
   },
   methods: {
     // 下一步
-    next () {
+    next() {
       // this.$refs.thirdForm.validate((valid) => {
       //   if (valid) {
       //     this.loading = true;
@@ -165,39 +138,6 @@ export default {
       // });
       this.$emit('change', 3);
     },
-    // 上传之前
-    beforeUpload () {
-      this.uploadLoading = true;
-      if (this.form.storeLogo.length >= 3) {
-        this.$Message.warning('最多上传三张图片')
-        return false;
-      }
-    },
-    // 上传成功回调
-    handleSuccess (res, file) {
-      this.uploadLoading = false;
-      this.form.storeLogo.push(res.result);
-    },
-    // 上传格式错误
-    handleFormatError (file) {
-      this.uploadLoading = false;
-      this.$Notice.warning({
-        title: 'The file format is incorrect',
-        desc: '上传文件格式不正确'
-      });
-    },
-    // 上传大小限制
-    handleMaxSize (file) {
-      this.uploadLoading = false;
-      this.$Notice.warning({
-        title: 'Exceeding file size limit',
-        desc: '文件大小不能超过2M'
-      })
-    },
-    // 上传失败
-    uploadErr () {
-      this.uploadLoading = false;
-    },
     // 查看图片
     handleView (item) {
       this.previewPicture = item;
@@ -208,14 +148,14 @@ export default {
       this.form[listName].splice(index, 1);
     },
     // 选择坐标回调
-    getAddress (val) {
-      if(val.type === 'select'){
+    getAddress(val) {
+      if (val.type === 'select') {
         const paths = val.data.map(item => item.name).join(',')
         const ids = val.data.map(item => item.id).join(',')
         this.$set(this.form, "storeAddressPath", paths);
         this.$set(this.form, "storeAddressIdPath", ids);
         this.form.storeCenter = val.data[val.data.length - 1].center
-      }else{
+      } else {
         this.$set(this.form, "storeAddressPath", val.data.addr);
         this.$set(this.form, "storeAddressIdPath", val.data.addrId);
         this.$set(
@@ -226,15 +166,57 @@ export default {
       }
     },
     // 获取商品分类
-    getCategoryList () {
+    getCategoryList() {
       getCategory(0).then((res) => {
         if (res.success) this.categoryList = res.result;
       });
     },
+    handleRemove(file) {
+      const fileList = this.$refs.upload.fileList;
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    },
+    handleSuccess(res, file) {
+      console.log(this.ossSTSObj.host + "/" + this.ossSTSObj.key.replace("${filename}", file.name))
+      file.url = this.ossSTSObj.host + "/" + this.ossSTSObj.key.replace("${filename}", file.name)
+      // this.form.storeLogo.push(file.url);
+      // file.name = file.name;
+    },
+    handleFormatError(file) {
+      this.$Message.warning('图片格式错误！')
+    },
+    handleMaxSize(file) {
+      this.$Message.warning('图片大小超出限制！')
+    },
+    handleBeforeUpload() {
+      const check = this.uploadList.length < 9;
+      if (!check) {
+        this.$Message.warning('最多上传9张图片！')
+        return check;
+      }
+      let _self = this;
+      return new Promise((resolve, reject) => {
+        obtainOSSToken()
+          .then(response => {
+            let result = response.result
+            _self.ossSTSObj.policy = result.policy;
+            _self.ossSTSObj.signature = result.signature;
+            _self.ossSTSObj.ossaccessKeyId = result.accessid;
+            _self.ossSTSObj.key = result.dir + "/" + uuidv4() + "_${filename}";
+            _self.ossSTSObj.dir = result.dir;
+            _self.ossSTSObj.host = result.host;
+            _self.ossEndpoint = result.host;
+            resolve(true);
+          })
+          .catch(err => {
+            console.log("出错了...", err)
+            reject(false);
+          });
+      });
+    }
 
 
   },
-  mounted () {
+  mounted() {
     this.accessToken.accessToken = storage.getItem('accessToken');
     this.getCategoryList();
     if (this.content != {}) {
@@ -249,6 +231,8 @@ export default {
       }
       this.$forceUpdate();
     }
+    this.uploadList = this.$refs.upload.fileList;
+    this.form.storeLogo = this.uploadList
     this.$refs.thirdForm.resetFields()
   }
 };
@@ -265,15 +249,18 @@ h4 {
   line-height: 40px;
   text-align: left;
 }
+
 .ivu-input-wrapper {
   width: 300px;
 }
+
 .img-list {
   display: inline-block;
   margin: 10px;
   width: 100px;
   height: auto;
   position: relative;
+
   .cover {
     display: none;
     position: absolute;
@@ -286,18 +273,62 @@ h4 {
     height: inherit;
     align-items: center;
     justify-content: space-around;
+
     i {
       color: #fff;
       font-size: 30px;
       cursor: pointer;
     }
   }
+
   &:hover .cover {
     display: flex;
   }
 }
+
 .describe {
   font-size: 12px;
   color: #999;
+}
+
+.demo-upload-list {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  // border: 1px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  margin-right: 4px;
+}
+
+.demo-upload-list img {
+  width: 100%;
+  height: 100%;
+}
+
+.demo-upload-list-cover {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .6);
+}
+
+.demo-upload-list:hover .demo-upload-list-cover {
+  display: block;
+}
+
+.demo-upload-list-cover i {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 2px;
 }
 </style>
