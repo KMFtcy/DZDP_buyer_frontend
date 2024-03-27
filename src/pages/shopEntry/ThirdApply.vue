@@ -117,34 +117,37 @@ export default {
   methods: {
     // 下一步
     next() {
-      // this.$refs.thirdForm.validate((valid) => {
-      //   if (valid) {
-      //     this.loading = true;
-      //     let params = JSON.parse(JSON.stringify(this.form));
-      //     params.storeLogo = this.form.storeLogo.toString();
-      //     params.goodsManagementCategory = this.form.goodsManagementCategory.toString();
-      //     applyThird(params)
-      //       .then((res) => {
-      //         this.loading = false;
-      //         if (res.success) this.$emit('change', 3);
-      //         this.$parent.getData()
-      //       })
-      //       .catch(() => {
-      //         this.loading = false;
-      //       });
-      //   } else {
-      //     console.log('error');
-      //   }
-      // });
-      this.$emit('change', 1);
+      let params = JSON.parse(JSON.stringify(this.form));
+      params.storeLogo = this.form.storeLogo[0].url;
+      console.log(params)
+      this.$refs.thirdForm.validate((valid) => {
+        if (valid) {
+          let params = JSON.parse(JSON.stringify(this.form));
+          params.storeLogo = this.form.storeLogo[0].url;
+          params.goodsManagementCategory = this.form.goodsManagementCategory.toString();
+          applyThird(params)
+            .then((res) => {
+              this.loading = false;
+              if (res.success) this.$emit('change', 3);
+              this.$parent.getData()
+            })
+            .catch((error) => {
+              this.loading = false;
+              console.log(error)
+            });
+          this.$emit('change', 1);
+        } else {
+          console.log('validate error');
+        }
+      });
     },
     // 查看图片
-    handleView (item) {
+    handleView(item) {
       this.previewPicture = item;
       this.visible = true;
     },
     // 删除图片
-    handleRemove (index, listName) {
+    handleRemove(index, listName) {
       this.form[listName].splice(index, 1);
     },
     // 选择坐标回调
