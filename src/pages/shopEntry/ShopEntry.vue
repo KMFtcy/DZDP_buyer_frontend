@@ -4,18 +4,18 @@
     <div class="content">
       <h1>店铺入驻</h1>
       <Steps :current="currentIndex" class="margin">
-        <Step title="企业资质信息"></Step>
-        <Step title="财务资质信息"></Step>
+        <!-- <Step title="企业资质信息"></Step>
+        <Step title="财务资质信息"></Step> -->
         <Step title="其他信息"></Step>
         <Step title="提交审核"></Step>
       </Steps>
-      <first-apply v-if="currentIndex == 0 && dataReview" :content="firstData" @change="nextPage"></first-apply>
+      <!-- <first-apply v-if="currentIndex == 0 && dataReview" :content="firstData" @change="nextPage"></first-apply>
 
-      <second-apply v-if="currentIndex == 1 && dataReview" :content="secondData" @change="nextPage"></second-apply>
+      <second-apply v-if="currentIndex == 1 && dataReview" :content="secondData" @change="nextPage"></second-apply> -->
 
-      <third-apply v-if="currentIndex == 2 && dataReview" :content="thirdData" @change="nextPage"></third-apply>
+      <third-apply v-if="currentIndex == 0 && dataReview" :content="thirdData" @change="nextPage"></third-apply>
 
-      <div class="success-page" v-if="currentIndex == 3">
+      <div class="success-page" v-if="currentIndex == 1">
         <span v-if="storeDisable == '' || storeDisable == 'APPLYING'">入驻申请提交成功，等待平台审核</span>
         <span v-if="storeDisable == 'OPEN'">申请已通过，请联系管理员</span>
         <span v-if="storeDisable == 'CLOSED'">店铺已关闭，重申请联系管理员</span>
