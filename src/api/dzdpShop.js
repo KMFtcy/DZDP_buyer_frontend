@@ -33,3 +33,20 @@ export function getShopsComments (params) {
     params
   })
 }
+
+export function postShopsComments (params) {
+  return request({
+    url: `/dzdp/storeComment/insert`,
+    method: Method.POST,
+    needToken: true,
+    data: params
+  })
+}
+
+export function obtainOSSToken() {
+  return request({
+    url: `/dzdp/oss/getToken`,
+    method: Method.GET,
+    needToken: true
+  })
+}
