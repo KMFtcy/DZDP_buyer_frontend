@@ -52,7 +52,7 @@
       </FormItem>
 
       <FormItem>
-        <Button @click="$emit('change', 1)">返回</Button>
+        <Button @click="$router.push('/')">返回</Button>
         <Button type="primary" :loading="loading" @click="next">提交平台审核</Button>
       </FormItem>
     </Form>
@@ -136,7 +136,7 @@ export default {
       //     console.log('error');
       //   }
       // });
-      this.$emit('change', 3);
+      this.$emit('change', 1);
     },
     // 查看图片
     handleView (item) {

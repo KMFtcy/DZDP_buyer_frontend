@@ -21,13 +21,13 @@
         <span v-if="storeDisable == 'CLOSED'">店铺已关闭，重申请联系管理员</span>
         <span v-if="storeDisable == 'REFUSED'">审核未通过,请修改资质信息，如有疑问请联系管理员</span>
       </div>
-      <Button v-if="currentIndex === 3" @click="$router.push('/')">返回</Button>
+      <Button v-if="currentIndex === 1" @click="$router.push('/')">返回</Button>
       &nbsp;
       <Button type="primary" @click='currentIndex = 0'
-        v-if="storeDisable === 'REFUSED' && currentIndex === 3">重新申请</Button>
+        v-if="storeDisable === 'REFUSED' && currentIndex === 1">重新申请</Button>
     </div>
 
-    <Modal title="店铺入驻协议" v-model="showAgreement" width="1200" :closable="false" :mask-closable="false">
+    <!-- <Modal title="店铺入驻协议" v-model="showAgreement" width="1200" :closable="false" :mask-closable="false">
       <Scroll :on-reach-bottom="handleReachBottom">
         <div class="agreeent-con" v-html="agreementCon"></div>
       </Scroll>
@@ -38,7 +38,7 @@
         </p>
         <Button type="primary" :disabled="!checked" class="margin" @click="showAgreement = false">同意协议填写资质信息</Button>
       </div>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 <script>
