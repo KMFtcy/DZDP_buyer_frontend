@@ -36,7 +36,7 @@
             <div v-else class="goods-show-info" v-for="(item, index) in shopsList" :key="index"
               @click="goGoodsDetail(item.id)">
               <div class="goods-show-img">
-                <img width="172" height="129" :src="item.thumbnail" />
+                <img width="172" height="129" :src="item.storeLogo" />
               </div>
               <div class="goods-show-title-wrap">
                 <p class="goods-show-title">{{ item.storeName }}</p>
@@ -69,7 +69,9 @@
                 </div>
                 <div class="goods-show-desc">
                   <div class="goods-show-desc-up">
-                    <Rate allow-half disabled :model-value="item.starAvg || 0" />
+                    <!-- <Rate allow-half disabled :model-value="item.starAvg || 0" /> -->
+                    <Rate allow-half disabled v-model="item.starAvg" />
+                    <!-- <p><span>{{ item.starAvg || 0 }}</span>评分 </p> -->
                     <p><span>{{ item.commentNum || 0 }}</span>条评价 </p>
                     <p>人均：<span>{{ item.consumptionAvg | unitPrice("￥") || 0 }}</span></p>
                   </div>
@@ -116,6 +118,7 @@ export default {
         { title: "销量", en: "buyCount" },
         { title: "评论数", en: "commentNum" },
         { title: "新品", en: "releaseTime" },
+        { title: "评分", en: "starAvg" }, // 添加评分排序选项
       ],
       shopsList: [], // 商品列表
       loading: false, // 加载状态
@@ -160,7 +163,7 @@ export default {
       // 排序
       this.sortIndex = index;
       this.params.sort = data;
-      this.params.order = "desc";
+      this.params.order = "desc"; //默认设置为降序
       if (data === "price") {
         if (!this.sortPriceIndex) {
           this.sortPriceIndex = "asc";
@@ -230,6 +233,7 @@ export default {
     ShopsClassNav,
   },
 };
+
 </script>
 
 <style scoped lang="scss">
@@ -248,7 +252,7 @@ export default {
   align-items: center; // 居中对齐子元素
   // margin-bottom: 20px; // 增加商品项之间的间距
   margin: 1px auto;
-  width: 1184px;
+  width: 948px;
   height: 172px;
 }
 
@@ -385,7 +389,7 @@ export default {
 /* ---------------商品栏开始------------------- */
 .goods-list-box {
   position: relative;
-  width: 100%;
+  width: 948px;
   // margin-left: 15px;
   // width: calc(100% - 215px);
 }
