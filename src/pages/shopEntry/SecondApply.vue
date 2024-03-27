@@ -72,21 +72,22 @@ export default {
   methods: {
     // 下一步
     next () {
-      this.$refs.secondForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          applySecond(this.form)
-            .then((res) => {
-              this.loading = false;
-              if (res.success) this.$emit('change', 2);
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log('error');
-        }
-      });
+      // this.$refs.secondForm.validate((valid) => {
+      //   if (valid) {
+      //     this.loading = true;
+      //     applySecond(this.form)
+      //       .then((res) => {
+      //         this.loading = false;
+      //         if (res.success) this.$emit('change', 2);
+      //       })
+      //       .catch(() => {
+      //         this.loading = false;
+      //       });
+      //   } else {
+      //     console.log('error');
+      //   }
+      // });
+      this.$emit('change', 2);
     }
   },
   mounted () {

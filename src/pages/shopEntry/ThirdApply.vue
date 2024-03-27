@@ -144,25 +144,26 @@ export default {
   methods: {
     // 下一步
     next () {
-      this.$refs.thirdForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          let params = JSON.parse(JSON.stringify(this.form));
-          params.storeLogo = this.form.storeLogo.toString();
-          params.goodsManagementCategory = this.form.goodsManagementCategory.toString();
-          applyThird(params)
-            .then((res) => {
-              this.loading = false;
-              if (res.success) this.$emit('change', 3);
-              this.$parent.getData()
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log('error');
-        }
-      });
+      // this.$refs.thirdForm.validate((valid) => {
+      //   if (valid) {
+      //     this.loading = true;
+      //     let params = JSON.parse(JSON.stringify(this.form));
+      //     params.storeLogo = this.form.storeLogo.toString();
+      //     params.goodsManagementCategory = this.form.goodsManagementCategory.toString();
+      //     applyThird(params)
+      //       .then((res) => {
+      //         this.loading = false;
+      //         if (res.success) this.$emit('change', 3);
+      //         this.$parent.getData()
+      //       })
+      //       .catch(() => {
+      //         this.loading = false;
+      //       });
+      //   } else {
+      //     console.log('error');
+      //   }
+      // });
+      this.$emit('change', 3);
     },
     // 上传之前
     beforeUpload () {
