@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="store-image">
-        <img :src="detail.storeImages[0].url">
+        <img :src="detail.storeLogo">
         <!-- <carousel adjustableHeight="true" autoplay="true">
           <slide>
             <img :src="detail.storeImages[0].url">
