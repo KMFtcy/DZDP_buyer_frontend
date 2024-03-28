@@ -2,7 +2,7 @@
   <div class="person-msg">
     <Form ref="thirdForm" :model="form" :rules="rules" :label-width="140">
       <h4>基础信息</h4>
-      <FormItem prop="storeNameformJSON" label="店铺名称">
+      <FormItem prop="storeName" label="店铺名称">
         <Input type="text" v-model="form.storeName" placeholder="请填写店铺名称" />
       </FormItem>
 
@@ -32,6 +32,9 @@
             <div class="upload-desc">单张图片不超过10MB，尺寸不小于300*300px，支持jpg、png和bmp格式</div>
           </div>
         </div>
+      </FormItem>
+      <FormItem prop="phone" label="店铺联系电话">
+        <Input type="text" v-model="form.phone" placeholder="请填写店铺联系电话" />
       </FormItem>
       <FormItem prop="goodsManagementCategory" label="店铺经营类目">
         <Select v-model="form.goodsManagementCategory" style="width: 300px">
@@ -105,6 +108,7 @@ export default {
         ],
         storeName: [{ required: true, message: '请填写店铺名称' }],
         storeLogo: [{ required: true, message: '请上传店铺logo' }],
+        phone: [{ required: true, message: '请填写店铺联系电话' }],
         storeDesc: [{ required: true, message: '请填写店铺简介' }],
         storeCenter: [{ required: true, message: '请选择店铺位置' }],
         storeAddressIdPath: [{ required: true, message: '请选择店铺位置' }],
@@ -128,14 +132,18 @@ export default {
           let params = {}
           params.storeName = formJSON.storeName
           params.storeLogo = formJSON.storeLogo[0].url;
+          params.phone = formJSON.phone;
           params.categoryName = this.categoryList[formJSON.goodsManagementCategory].name;
           params.categoryId = this.categoryList[formJSON.goodsManagementCategory].id;
+          params.goodsManagementCategory = this.goodsManagementCategory
           params.storeAddressPath = formJSON.storeAddressPath
           params.storeAddressIdPath = formJSON.storeAddressIdPath
           params.storeAddressDetail = formJSON.storeAddressDetail
           params.storeCenter = formJSON.storeCenter
           params.storeDesc = formJSON.storeDesc
           params.businessHour = this.form.openingHours;
+          console.log(formJSON)
+          console.log(params)
           applyThird(params)
             .then((res) => {
               this.loading = false;
