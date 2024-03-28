@@ -2,7 +2,7 @@
   <div class="person-msg">
     <Form ref="thirdForm" :model="form" :rules="rules" :label-width="140">
       <h4>基础信息</h4>
-      <FormItem prop="storeName" label="店铺名称">
+      <FormItem prop="storeNameformJSON" label="店铺名称">
         <Input type="text" v-model="form.storeName" placeholder="请填写店铺名称" />
       </FormItem>
 
@@ -34,8 +34,8 @@
         </div>
       </FormItem>
       <FormItem prop="goodsManagementCategory" label="店铺经营类目">
-        <Select v-model="form.goodsManagementCategory" multiple style="width: 300px">
-          <Option v-for="item in categoryList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+        <Select v-model="form.goodsManagementCategory" style="width: 300px">
+          <Option v-for="(item, index) in categoryList" :value="index" :key="item.id">{{ item.name }}</Option>
         </Select>
       </FormItem>
 
@@ -72,11 +72,12 @@ import { getCategory } from '@/api/goods';
 import storage from '@/plugins/storage';
 import { commonUrl } from '@/plugins/request.js';
 
+import { getShopCategoryList } from "@/api/dzdpShop";
 
 import multipleMap from "@/components/map/multiple-map";
 import { obtainOSSToken } from '../../api/dzdpShop';
 import { v4 as uuidv4 } from 'uuid';
-
+import TinyQueue from 'tinyqueue';
 
 export default {
   props: {
@@ -121,14 +122,19 @@ export default {
   methods: {
     // 下一步
     next() {
-      let params = JSON.parse(JSON.stringify(this.form));
-      params.storeLogo = this.form.storeLogo[0].url;
-      console.log(params)
       this.$refs.thirdForm.validate((valid) => {
         if (valid) {
-          let params = JSON.parse(JSON.stringify(this.form));
-          params.storeLogo = this.form.storeLogo[0].url;
-          params.goodsManagementCategory = this.form.goodsManagementCategory.toString();
+          let formJSON = JSON.parse(JSON.stringify(this.form));
+          let params = {}
+          params.storeName = formJSON.storeName
+          params.storeLogo = formJSON.storeLogo[0].url;
+          params.categoryName = this.categoryList[formJSON.goodsManagementCategory].name;
+          params.categoryId = this.categoryList[formJSON.goodsManagementCategory].id;
+          params.storeAddressPath = formJSON.storeAddressPath
+          params.storeAddressIdPath = formJSON.storeAddressIdPath
+          params.storeAddressDetail = formJSON.storeAddressDetail
+          params.storeCenter = formJSON.storeCenter
+          params.storeDesc = formJSON.storeDesc
           params.businessHour = this.form.openingHours;
           applyThird(params)
             .then((res) => {
@@ -175,8 +181,24 @@ export default {
     },
     // 获取商品分类
     getCategoryList() {
-      getCategory(0).then((res) => {
-        if (res.success) this.categoryList = res.result;
+      getShopCategoryList().then((res) => {
+        if (res.success) {
+          let cateList = []
+          var children = new TinyQueue();
+          res.result.forEach(child => {
+            children.push(child)
+          });
+          while (children.length > 0) {
+            let top = children.pop()
+            cateList.push({ id: top.categoryId, name: top.name })
+            if (top.children != null) {
+              top.children.forEach(child => {
+                children.push(child)
+              });
+            }
+          }
+          this.categoryList = cateList
+        }
       });
     },
     handleRemove(file) {
