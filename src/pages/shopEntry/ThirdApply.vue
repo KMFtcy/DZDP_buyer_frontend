@@ -50,6 +50,9 @@
         <Input type="textarea" v-model="form.storeDesc" maxlength="200" show-word-limit :rows="4"
           placeholder="请输入店铺简介" />
       </FormItem>
+      <FormItem prop="openingHours" label="营业时间">
+        <Input type="text" v-model="form.openingHours" placeholder="请填写店铺营业时间" />
+      </FormItem>
 
       <FormItem>
         <Button @click="$router.push('/')">返回</Button>
@@ -104,7 +107,8 @@ export default {
         storeDesc: [{ required: true, message: '请填写店铺简介' }],
         storeCenter: [{ required: true, message: '请选择店铺位置' }],
         storeAddressIdPath: [{ required: true, message: '请选择店铺位置' }],
-        storeAddressDetail: [{ required: true, message: '请输入店铺详细地址' }]
+        storeAddressDetail: [{ required: true, message: '请输入店铺详细地址' }],
+        openingHours: [{ required: true, message: '请输入店铺营业时间' }]
       },
       categoryList: [], // 分类数据
       ossEndpoint: "",
@@ -125,6 +129,7 @@ export default {
           let params = JSON.parse(JSON.stringify(this.form));
           params.storeLogo = this.form.storeLogo[0].url;
           params.goodsManagementCategory = this.form.goodsManagementCategory.toString();
+          params.businessHour = this.form.openingHours;
           applyThird(params)
             .then((res) => {
               this.loading = false;

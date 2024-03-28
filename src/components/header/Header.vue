@@ -38,7 +38,7 @@
             </transition>
           </div>
         </li>
-        <li @click="goUserCenter('/home/MyOrder')"><span class="nav-item">我的订单</span></li>
+        <li @click="goUserCenter('/home/MyOrder')"><span class="nav-item">我的点评</span></li>
         <!-- <li @click="goUserCenter('/home/MyTracks')"><span class="nav-item">我的足迹</span></li> -->
         <!-- <li @click="goUserCenter('/home/MsgList')"><span class="nav-item">我的消息</span></li> -->
         <li v-if="$route.name !== 'Cart'" style="position:relative;">
