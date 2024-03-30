@@ -38,11 +38,14 @@
           <li
             v-for="(item, index) in cateList"
             :key="index"
+            @mouseenter="showDetail(index)"
           >
             <span class="nav-side-item first-nav-cate" @click="goShopsList(item.categoryId)">{{
               item.name
-            }} : </span>
-            <span v-for="(second, secIndex) in item.children" :key="secIndex">
+            }} 
+          <span style="color: darkgray; font-size: 11px;"> 探索更多 > </span>  
+          </span>
+            <!-- <span v-for="(second, secIndex) in item.children" :key="secIndex">
               <span
                 @click="goShopsList(second.categoryId, item.categoryId)"
                 class="nav-side-item"
@@ -50,7 +53,7 @@
                 >{{ second.name }}</span
               >
               <span v-if="secIndex < 1"> / </span>
-            </span>
+            </span> -->
           </li>
         </ul>
       </div>
@@ -65,37 +68,13 @@
         <div class="nav-detail-item">
           <template v-for="(item,index) in panelData">
             <span
-              @click="goShopsList(item.id,item.parentId)"
-              v-if="index < 8"
+              @click="goShopsList(item.categoryId)"
               :key="index"
-              >{{ item.name }}<Icon type="ios-arrow-forward"
-            /></span>
+              >{{ item.name }}</span>
+            <br v-if="(index+1) % 8 == 0">
+            <br v-if="(index+1) % 8 == 0">
           </template>
         </div>
-        <ul>
-          <li
-            v-for="(items, index) in panelData"
-            :key="index"
-            class="detail-item-row"
-          >
-            <span
-              class="detail-item-title"
-              @click="goShopsList(items.id, items.parentId)"
-            >
-              {{ items.name }} <Icon type="ios-arrow-forward" />
-              <span class="glyphicon glyphicon-menu-right"></span>
-            </span>
-            <div>
-              <span
-                v-for="(item, subIndex) in items.children"
-                @click="goShopsList(item.id, items.id, items.parentId)"
-                :key="subIndex"
-                class="detail-item"
-                >{{ item.name }}</span
-              >
-            </div>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -413,7 +392,7 @@ export default {
 .detail-item-row {
   display: flex;
   > div {
-    flex: 1;
+    float: left
   }
 }
 .detail-item {
