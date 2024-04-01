@@ -38,7 +38,7 @@
             </transition>
           </div>
         </li>
-        <li @click="goUserCenter('/home/MyOrder')"><span class="nav-item">我的订单</span></li>
+        <li @click="goUserCenter('/home/MyOrder')"><span class="nav-item">我的点评</span></li>
         <!-- <li @click="goUserCenter('/home/MyTracks')"><span class="nav-item">我的足迹</span></li> -->
         <!-- <li @click="goUserCenter('/home/MsgList')"><span class="nav-item">我的消息</span></li> -->
         <li v-if="$route.name !== 'Cart'" style="position:relative;">
@@ -159,11 +159,11 @@ export default {
     shopEntry() {
       // 店铺入驻
       if (storage.getItem('accessToken')) {
-        let routeUrl = this.$router.resolve({
+        let routeUrl = {
           path: '/shopEntry',
           query: {id: 1}
-        });
-        window.open(routeUrl.href, '_blank');
+        };
+        this.$router.push(routeUrl);
       } else {
         this.$router.push('login');
       }

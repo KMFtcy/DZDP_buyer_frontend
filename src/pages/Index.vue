@@ -119,7 +119,6 @@ export default {
       }
     },
     getcps(){
-      console.log(123123)
       let data = new Date()
       let datas = data.getDate()
       getAutoCoup().then(res=>{ //调用自动发券
@@ -136,7 +135,6 @@ export default {
                 return cur;
               }, []);
               if(this.autoCoupList != '' && this.autoCoupList.length > 0){
-                console.log(1231232132)
                 this.showCpmodel = true;
               }
               storage.setItem('getTimes',datas)//存储缓存
