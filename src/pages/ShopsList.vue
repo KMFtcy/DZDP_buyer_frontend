@@ -19,13 +19,15 @@
                   <Icon type="ios-arrow-round-down" />
                 </span>
               </li>
-              <li @click="orderBy('price', 5, 'up')" class="price-sort">
+              <li @click="orderBy('consumptionAvg', 5, 'up')" class="price-sort">
                 <span :class="{ 'goods-list-tool-active': 5 === sortIndex }">
                   价格
                   <div>
                     <Icon type="md-arrow-dropup" :class="{ 'price-color': sortPriceIndex == 'desc' }" />
                     <Icon type="md-arrow-dropdown" :class="{ 'price-color': sortPriceIndex == 'asc' }" />
                   </div>
+                  <!-- <Icon type="ios-arrow-round-down" :class="{ reverse: params.order == 'asc'}" /> -->
+
                 </span>
               </li>
             </ul>
@@ -115,9 +117,9 @@ export default {
       goodsTool: [
         // 排序类型
         { title: "综合", en: "" },
-        { title: "销量", en: "buyCount" },
+        // { title: "销量", en: "buyCount" },
         { title: "评论数", en: "commentNum" },
-        { title: "新品", en: "releaseTime" },
+        // { title: "新品", en: "releaseTime" },
         { title: "评分", en: "starAvg" }, // 添加评分排序选项
       ],
       shopsList: [], // 商品列表
@@ -164,7 +166,7 @@ export default {
       this.sortIndex = index;
       this.params.sort = data;
       this.params.order = "desc"; //默认设置为降序
-      if (data === "price") {
+      if (data === "consumptionAvg") {
         if (!this.sortPriceIndex) {
           this.sortPriceIndex = "asc";
         } else {
@@ -389,7 +391,9 @@ export default {
 /* ---------------商品栏开始------------------- */
 .goods-list-box {
   position: relative;
-  width: 948px;
+  // width:100%;
+  // width: 948px;
+  // align-items: center; // 居中对齐子元素
   // margin-left: 15px;
   // width: calc(100% - 215px);
 }
@@ -411,12 +415,13 @@ export default {
 
   .price-sort {
     span {
+      font-size: 11.6px;
       display: inline-block;
       vertical-align: middle;
-      width: 50px;
+      width: 55.34px;
       height: 22px;
       position: relative;
-      line-height: 15px;
+      line-height: 14.3px;
       top: -2px;
       left: 0;
     }
@@ -424,6 +429,7 @@ export default {
       display: inline-block;
       .ivu-icon {
         font-size: 12px;
+        vertical-align: middle;
         position: absolute;
         &:nth-child(1) {
           top: 1px;
@@ -464,5 +470,8 @@ export default {
   background-color: $theme_color !important;
 }
 
+// .reverse {
+//   transform: rotate(180deg);
+// }
 /* ---------------商品栏结束------------------- */
 </style>
