@@ -72,6 +72,7 @@ service.interceptors.request.use(
     let accessToken = Storage.getItem('accessToken');
     if (accessToken && config.needToken) {
       config.headers['accessToken'] = accessToken;
+      config.headers['Authorization'] = "Bearer " + accessToken;
       // 解析当前token时间
       let jwtData = JSON.parse(
         decodeURIComponent(escape(window.atob(accessToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))))
