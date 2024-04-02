@@ -32,6 +32,21 @@ if (aMapSecurityJsCode) {
   };
 }
 
+window.addEventListener("beforeunload", (e) => {
+  // only report if it is login
+  if (storage.getItem('userInfo')){
+    let explore_data = {
+      "method": "unload_app",
+    }
+    // navigator.sendBeacon(buyerUrl + "/behaviour/quit" + "?token=" + storage.getItem('accessToken'), explore_record);
+    navigator.sendBeacon(buyerUrl+ "/behaviour/quit" 
+    + "?token=" + storage.getItem('accessToken')
+    + "&type=quit"
+    + "&data=" + JSON.stringify(explore_data),
+      {});
+  }
+});
+
 router.beforeResolve((to, from, next) => {
   // only report if it is login
   if (storage.getItem('userInfo')){
