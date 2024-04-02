@@ -9,6 +9,7 @@ import store from "@/vuex/store";
 import storage from "@/plugins/storage";
 // 全局引入封装组件
 import {InstallAll} from "@/components/global.js";
+import * as apiMonitor from "@/api/monitor";
 
 const {aMapSecurityJsCode, title, inputMaxLength} = require("@/config");
 
@@ -30,6 +31,22 @@ if (aMapSecurityJsCode) {
     securityJsCode: aMapSecurityJsCode,
   };
 }
+
+router.beforeResolve((to, from, next) => {
+  // only report if it is login
+  if (storage.getItem('userInfo')){
+    let explore_data = {
+        "path": to.path,
+        "query": to.query
+    }
+    let explore_record = {
+      "type": "view",
+      "data": JSON.stringify(explore_data)
+    }
+    apiMonitor.report(explore_record)
+  }
+  next()
+})
 
 router.beforeEach((to, from, next) => {
   ViewUI.LoadingBar.start();
