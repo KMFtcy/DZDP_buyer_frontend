@@ -247,9 +247,8 @@ export default {
 // 商品项样式调整
 .goods-show-info {
   display: flex;
-  // flex: 1;
-  width: 100%;
-  flex: auto;
+  flex: 1;
+  min-width: 100%;
   flex-direction: row; // 更改为横向布局
   align-items: center; // 居中对齐子元素
   // margin-bottom: 20px; // 增加商品项之间的间距

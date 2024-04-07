@@ -133,3 +133,12 @@ export const getTracesList = (sn, params) => {
     needToken: true,
   })
 };
+
+export const getComments = (params) => {
+  return request({
+    url: `/dzdp/storeComment/getUserComments`,
+    method: Method.GET,
+    needToken: true,
+    params
+  })
+};

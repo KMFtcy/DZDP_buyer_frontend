@@ -1,11 +1,7 @@
 <template>
   <div class="cate-nav width_1200_auto" :class="{'fixed-show':useClass == 'fixed-show'}">
     <div class="nav-con" :class="{'background-white':useClass == 'background-white'}">
-      <div
-        class="all-categories hover-pointer"
-        @mouseenter="showFirstLists"
-        @mouseleave="showFirstList = false"
-      >
+      <div class="all-categories hover-pointer" @mouseenter="showFirstLists" @mouseleave="showFirstList = false">
         全部分类
       </div>
       <!-- <ul class="nav-item " v-if="showNavBar">
@@ -21,30 +17,17 @@
       </ul> -->
     </div>
     <!-- 全部商品分类 -->
-    <div
-      class="cate-list"
-      :style="{'top':!showNavBar ?'60px':'46px'}"
-      v-show="showAlways || showFirstList"
-      @mouseenter="showFirstList = true"
-      @mouseleave="showFirstList = false"
-    >
+    <div class="cate-list" :style="{'top':!showNavBar ?'60px':'46px'}" v-show="showAlways || showFirstList"
+      @mouseenter="showFirstList = true" @mouseleave="showFirstList = false">
       <!-- 第一级分类 -->
-      <div
-        class="nav-side"
-        :class="{ 'large-nav': large, 'opacity-nav': opacity }"
-        @mouseleave="panel = false"
-      >
+      <div class="nav-side" :class="{ 'large-nav': large, 'opacity-nav': opacity }" @mouseleave="panel = false">
         <ul>
-          <li
-            v-for="(item, index) in cateList"
-            :key="index"
-            @mouseenter="showDetail(index)"
-          >
+          <li v-for="(item, index) in cateList" :key="index" @mouseenter="showDetail(index)">
             <span class="nav-side-item first-nav-cate" @click="goShopsList(item.categoryId)">{{
               item.name
-            }} 
-          <span style="color: darkgray; font-size: 11px;"> 探索更多 > </span>  
-          </span>
+              }}
+              <span style="color: darkgray; font-size: 11px;"> 探索更多 > </span>
+            </span>
             <!-- <span v-for="(second, secIndex) in item.children" :key="secIndex">
               <span
                 @click="goShopsList(second.categoryId, item.categoryId)"
@@ -58,19 +41,11 @@
         </ul>
       </div>
       <!-- 展开分类 -->
-      <div
-        class="detail-item-panel"
-        :style="{ minHeight: large ? '470px' : '340px' }"
-        v-show="panel"
-        @mouseenter="panel = true"
-        @mouseleave="panel = false"
-      >
+      <div class="detail-item-panel" :style="{ minHeight: large ? '470px' : '340px' }" v-show="panel"
+        @mouseenter="panel = true" @mouseleave="panel = false">
         <div class="nav-detail-item">
           <template v-for="(item,index) in panelData">
-            <span
-              @click="goShopsList(item.categoryId)"
-              :key="index"
-              >{{ item.name }}</span>
+            <span :key="index" @click="goShopsList(item.categoryId, item.pid)">{{ item.name }}</span>
             <br v-if="(index+1) % 8 == 0">
             <br v-if="(index+1) % 8 == 0">
           </template>

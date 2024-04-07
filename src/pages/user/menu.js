@@ -7,22 +7,12 @@
 // 订单中心
 const order = [{
   icon: '',
-  title: '订单中心',
+  title: '评论中心',
   menus: [{
     icon: '',
-    title: '我的订单',
+    title: '我的评论',
     path: 'MyOrder'
   },
-  {
-    icon: '',
-    title: '收货地址',
-    path: 'MyAddress'
-  },
-  {
-    icon: '',
-    title: '售后订单',
-    path: 'AfterSale'
-  }
   ],
   display: true
 }];

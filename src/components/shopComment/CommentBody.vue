@@ -75,7 +75,8 @@
               <!-- <div class="expense-module">
                 <div class="expense-item">
                   <div class="module-title">人均</div>
-                  <div class="expense-wrapper"><input class="expense-input" value="" data-title="人均" data-index="0">
+                  <div class="expense-wrapper"><input class="expense-input" type="number" v-model="consumption" data-title="人均"
+                      data-index="0"></input>
                     <div class="unit">元</div>
                   </div>
                 </div>
@@ -141,6 +142,7 @@ export default {
       serviceRate: 0,
       cateRate: 0,
       commentText: "",
+      consumption: "",
       tips: ['不满意', '糟糕', '一般', '优秀', '非常满意'],
       ossEndpoint: "",
       ossSTSObj: {},
@@ -232,7 +234,7 @@ export default {
       });
       const postParams = {
         comment: this.commentText,
-        // consumption: "",
+        consumption: this.consumption,
         environmentScore: this.envRate,
         images: uploadImages,
         serviceScore: this.serviceRate,

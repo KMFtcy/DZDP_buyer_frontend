@@ -10,33 +10,30 @@
         <div class="bar" v-if="tabBar.first">
           {{ tabBar.first.name }}
         </div>
-        <Icon type="ios-arrow-forward" v-if="tabBar.first" />
+        <!-- <Icon type="ios-arrow-forward" v-if="tabBar.first" /> -->
 
-        <div class="bar" v-if="tabBar.second">
-          {{ tabBar.second.name }} <Icon type="ios-arrow-down" />
+        <!-- <div class="bar" v-if="tabBar.second">
+          {{ tabBar.second.name }}
+          <Icon type="ios-arrow-down" />
           <ul>
-            <li v-for="item in tabBar.first.children" :key="item.id"  @click="cateClick(item,3)">
+            <li v-for="item in tabBar.first.children" :key="item.id" @click="cateClick(item,3)">
               {{ item.name }}
             </li>
           </ul>
-        </div>
-        <Icon type="ios-arrow-forward" v-if="tabBar.second" />
+        </div> -->
+        <!-- <Icon type="ios-arrow-forward" v-if="tabBar.second" /> -->
       </template>
       <!-- 无商品分类，展示搜索结果 -->
       <template v-else>
         <div style="font-size:14px">全部结果</div>
         <Icon type="ios-arrow-forward" />
-        <div style="font-weight:bold;" class="mr_10">“{{params.keyword}}”</div>
+        <div v-if="params.keyword" style="font-weight:bold;" class="mr_10">“{{params.keyword}}”</div>
       </template>
       <!-- 所选分类 -->
-      <a
-        class="selected-item"
-        @click="cancelSelected(item, index)"
-        v-for="(item, index) in selectedItem"
-        :key="index"
-        :title="item.name"
-      >
-        <span>{{ item.type }}：</span><span>{{ item.name }}</span><Icon type="md-close" />
+      <a class="selected-item" @click="cancelSelected(item, index)" v-for="(item, index) in selectedItem" :key="index"
+        :title="item.name">
+        <span>{{ item.type }}：</span><span>{{ item.name }}</span>
+        <Icon type="md-close" />
       </a>
     </div>
 
@@ -49,17 +46,10 @@
         </div>
         <div>
           <ul :class="{ 'show-more': tagsContent[0].more }">
-            <li
-              @click="selectBrand(item.name, 0)"
-              :class="{ 'border-color': multSelected.includes(item) }"
-              v-for="(item, index) in tagsContent[0].values"
-              :key="index"
-            >
+            <li @click="selectBrand(item.name, 0)" :class="{ 'border-color': multSelected.includes(item) }"
+              v-for="(item, index) in tagsContent[0].values" :key="index">
               <img :src="item.url" alt="" /><span>{{ item.name }}</span>
-              <div
-                class="corner-icon"
-                v-show="multSelected.includes(item.name)"
-              >
+              <div class="corner-icon" v-show="multSelected.includes(item.name)">
                 <div></div>
                 <Icon type="md-checkmark" />
               </div>
@@ -67,22 +57,17 @@
           </ul>
 
           <div class="btn" v-show="multiple !== 0">
-            <span @click="moreBrand(0)"
-              >{{ tagsContent[0].more ? "收起" : "更多"
-              }}<Icon
-                :type="tagsContent[0].more ? 'ios-arrow-up' : 'ios-arrow-down'"
-            /></span>
-            <span @click="multSelectBrand(0)"><Icon type="md-add" />多选</span>
+            <span @click="moreBrand(0)">{{ tagsContent[0].more ? "收起" : "更多"
+              }}
+              <Icon :type="tagsContent[0].more ? 'ios-arrow-up' : 'ios-arrow-down'" />
+            </span>
+            <span @click="multSelectBrand(0)">
+              <Icon type="md-add" />多选
+            </span>
           </div>
 
           <div class="multBtn" v-show="multiple === 0">
-            <Button
-              type="primary"
-              size="small"
-              :disabled="!multSelected.length"
-              @click="sure(0)"
-              >确定</Button
-            >
+            <Button type="primary" size="small" :disabled="!multSelected.length" @click="sure(0)">确定</Button>
             <Button size="small" @click="cancel">取消</Button>
           </div>
         </div>
@@ -95,61 +80,37 @@
             <strong>{{ tag.key }}：</strong>
           </div>
           <div>
-            <ul
-              :class="{ 'show-more': tag.more }"
-              class="list"
-              v-show="multiple !== tagIndex"
-            >
-              <li
-                @click="selectBrand(item, tagIndex)"
-                class="item"
-                v-for="(item, index) in tag.values"
-                :key="index"
-              >
+            <ul :class="{ 'show-more': tag.more }" class="list" v-show="multiple !== tagIndex">
+              <li @click="selectBrand(item, tagIndex)" class="item" v-for="(item, index) in tag.values" :key="index">
                 {{ item }}
               </li>
             </ul>
 
-            <CheckboxGroup
-              :class="{ 'show-more': tag.more }"
-              class="list"
-              v-model="multSelected"
-              v-show="multiple === tagIndex"
-            >
-              <Checkbox
-                class="item"
-                :label="item"
-                v-for="(item, index) in tag.values"
-                :key="index"
-                >{{ item }}</Checkbox
-              >
+            <CheckboxGroup :class="{ 'show-more': tag.more }" class="list" v-model="multSelected"
+              v-show="multiple === tagIndex">
+              <Checkbox class="item" :label="item" v-for="(item, index) in tag.values" :key="index">{{ item }}
+              </Checkbox>
             </CheckboxGroup>
 
             <div class="btn" v-show="multiple !== tagIndex">
-              <span @click="moreBrand(tagIndex)" v-show="tag.values.length > 9"
-                >{{ tag.more ? "收起" : "更多"
-                }}<Icon :type="tag.more ? 'ios-arrow-up' : 'ios-arrow-down'"
-              /></span>
-              <span @click="multSelectBrand(tagIndex)"
-                ><Icon type="md-add" />多选</span
-              >
+              <span @click="moreBrand(tagIndex)" v-show="tag.values.length > 9">{{ tag.more ? "收起" : "更多"
+                }}
+                <Icon :type="tag.more ? 'ios-arrow-up' : 'ios-arrow-down'" />
+              </span>
+              <span @click="multSelectBrand(tagIndex)">
+                <Icon type="md-add" />多选
+              </span>
             </div>
 
             <div class="multBtn" v-show="multiple === tagIndex">
-              <Button
-                type="primary"
-                size="small"
-                :disabled="!multSelected.length"
-                @click="sure(tagIndex)"
-                >确定</Button
-              >
+              <Button type="primary" size="small" :disabled="!multSelected.length" @click="sure(tagIndex)">确定</Button>
               <Button size="small" @click="cancel">取消</Button>
             </div>
           </div>
         </div>
       </template>
       <div @click="moreOptions" v-if="tagsContent.length>4" class="more-options">
-      {{showTagCount===5?'更多筛选项':'收起筛选项'}}
+        {{showTagCount===5?'更多筛选项':'收起筛选项'}}
       </div>
     </div>
   </div>
@@ -417,7 +378,7 @@ export default {
     }
   }
   .bar {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
     position: relative;
     background: #fff;
