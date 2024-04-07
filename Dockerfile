@@ -1,7 +1,7 @@
-FROM node:10.19.0 as build-stage
+FROM dzdp-frontend-base as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install  --registry https://npm.aliyun.com/ 
 COPY . .
 RUN npm run build
 
