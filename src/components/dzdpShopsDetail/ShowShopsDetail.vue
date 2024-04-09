@@ -119,6 +119,7 @@ export default {
         if (res.success) {
           this.commentList = res.result.records
           this.commentTotal = res.result.total;
+          setTimeout(this.updateCommentsHeight, 500);
         } else {
           this.$Message.error(res.message);
           this.isLoading = false
