@@ -64,6 +64,9 @@
         </div>
       </div>
     </div>
+    <Modal title="图片预览" v-model="visible">
+      <img :src="previewPicture" v-if="visible" style="width: 100%" />
+    </Modal>
   </div>
 </template>
 
@@ -98,6 +101,7 @@ export default {
       },
       commentTypeNum: {}, // 评论数量，包括好中差分别的数量
       commentTotal: 0, // 评论总数
+      visible: false, // 图片预览
       onceFlag: true // 只调用一次
     };
   },
@@ -153,7 +157,8 @@ export default {
       }
     },
     previewImg (img, item) { // 预览图片
-      this.$set(item, 'previewImg', img);
+      this.previewPicture = img;
+      this.visible = true;
       this.$nextTick(() => {
         this.changeHeight('itemGoodsComment')
       });
