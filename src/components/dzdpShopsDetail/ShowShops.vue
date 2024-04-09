@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import storage from '@/plugins/storage.js';
 import { Carousel, Slide } from 'vue-carousel';
 import PicZoom from "vue-piczoom"; // 图片放大
 import DPlayer from "dplayer";
@@ -114,10 +115,28 @@ export default {
   methods: {
     goWriteComment(shopId){
       // 跳转写评论
-      let routeUrl = this.$router.push({
-        path: "/shopsComment",
-        query: { id: shopId},
-      });
+      if (storage.getItem('userInfo')) {
+        let routeUrl = this.$router.push({
+          path: "/shopsComment",
+          query: { id: shopId},
+        });
+      } else {
+        this.$Modal.confirm({
+          title: '请登录',
+          content: '<p>请登录后执行此操作</p>',
+          okText: '立即登录',
+          cancelText: '继续浏览',
+          onOk: () => {
+            this.$router.push({
+              path: '/login',
+              query: {
+                rePath: this.$router.history.current.path,
+                query: JSON.stringify(this.$router.history.current.query)
+              }
+            });
+          }
+        });
+      }
     }
   },
   mounted() {
