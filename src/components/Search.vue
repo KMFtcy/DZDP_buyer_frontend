@@ -191,7 +191,7 @@ export default {
     align-items: center;
     justify-content: center;
     top: 0;
-    z-index: 99;
+    z-index: 2;
     background-color: $theme_color;
     color: #ffffff;
 
