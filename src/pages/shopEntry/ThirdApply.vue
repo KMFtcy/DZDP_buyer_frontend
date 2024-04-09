@@ -62,7 +62,7 @@
         <Button type="primary" :loading="loading" @click="next">提交平台审核</Button>
       </FormItem>
     </Form>
-    <Modal title="View Image" v-model="visible">
+    <Modal title="图片预览" v-model="visible">
       <img :src="previewPicture" v-if="visible" style="width: 100%" />
     </Modal>
     <multipleMap ref="map" @callback="getAddress" />
