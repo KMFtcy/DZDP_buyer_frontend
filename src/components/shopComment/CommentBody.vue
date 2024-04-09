@@ -47,7 +47,7 @@
                 </div>
               </div>
               <div class="upload-image-module">
-                <div class="module-title">上传图片</div>
+                <div class="module-title-text">上传图片</div>
                 <div class="upload-wrapper">
                   <div class="demo-upload-list" v-for="item in uploadList">
                     <template v-if="item.status === 'finished'">
@@ -72,15 +72,13 @@
                   <div class="upload-desc">单张图片不超过10MB，尺寸不小于300*300px，支持jpg、png和bmp格式</div>
                 </div>
               </div>
-              <!-- <div class="expense-module">
-                <div class="expense-item">
-                  <div class="module-title">人均</div>
-                  <div class="expense-wrapper"><input class="expense-input" type="number" v-model="consumption" data-title="人均"
-                      data-index="0"></input>
+              <div class="expense-module">
+                <div class="module-title-text">人均</div>
+                  <div class="expense-wrapper">
+                    <input class="expense-input" type="number" v-model="consumption" data-title="人均" data-index="0"></input>
                     <div class="unit">元</div>
-                  </div>
                 </div>
-              </div> -->
+              </div>
               <div class="warn">
                 评价和打分都将是其他网友的参考依据，并影响该商户评价。请发布真实、客观的本人消费体验评价。如您收到威
                 或并非本人体验的虚假/恶意评价，则评价视为违规，同时影响您的信誉度
@@ -657,5 +655,35 @@ export default {
   font-size: 20px;
   cursor: pointer;
   margin: 0 2px;
+}
+
+.expense-module {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 13px;
+  position: relative;
+}
+
+.expense-module, .expense-wrapper{
+  display: flex;
+}
+
+.expense-module .expense-input {
+    width: 77px;
+    height: 26px;
+    padding: 3px 5px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+}
+
+.expense-module .unit {
+    font-size: 14px;
+    color: #333;
 }
 </style>
