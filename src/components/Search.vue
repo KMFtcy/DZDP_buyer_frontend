@@ -36,6 +36,7 @@
 <script>
 import storage from '@/plugins/storage.js'
 import {hotWords} from '@/api/goods.js'
+import * as apiMonitor from "@/api/monitor";
 
 export default {
   name: 'search',
@@ -81,19 +82,22 @@ export default {
       this.onlyStore = !this.onlyStore
     },
     search () { // 全平台搜索商品
-      const url = this.$route.path;
-      if(url == '/goodsList'){
-        this.$emit('search', this.searchData)
-      }else{
-        const pushData = {
-          path:'/goodsList',
-          query: { keyword: this.searchData },
+       // report comment view
+      if (storage.getItem('userInfo')){ // only report if it is login
+        let explore_data = {
+            "search_keyword": this.searchData
         }
-        if(this.storeId && this.onlyStore) pushData.query.storeId = this.storeId
-
-
-        this.$router.push(pushData);
+        let explore_record = {
+          "type": "search",
+          "data": JSON.stringify(explore_data)
+        }
+        apiMonitor.report(explore_record)
       }
+      // move to search result
+      this.$router.push({
+        path: '/shopsList',
+        query: { keyword: this.searchData }
+      });
     },
     searchStore() { // 店铺搜索商品
       this.$emit('search', this.searchData)
